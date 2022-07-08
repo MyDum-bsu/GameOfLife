@@ -1,17 +1,56 @@
 function make2DArray(cols, rows) {
-    let arr = new Array(cols);
-    for (let i = 0; i < arr.length; i++) {
-      arr[i] = new Array(rows);
-    }
-    return arr;
+  let arr = new Array(cols);
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = new Array(rows);
   }
+  return arr;
+}
+
+  let canvas = null;
+  var grid;
+  var cols;
+  var rows;
+  var resolution;
+  var resolutionChanged;
+  var speedChanged;
+  var mode;
+  let slider;
+
+function setup() {
+  mode = 0;
+  resolutionChanged = 0;
+  speedChanged = 0;
+  //noCursor();
+  //frameRate(); 
+
+  canvas = createCanvas(1920, 973);
+  canvas.parent('canvas');
+
+  Rslider = createSlider(2, 150, 10, 1);
+  Sslider = createSlider(1, 60, 60, 1);
+  resolution = Rslider.value();
+  frameRate(Sslider.value());
+  cols = floor(width / resolution);
+  rows = floor(height / resolution);
+  grid = make2DArray(cols, rows);
+  fillGrid();
+}
+
+function keyPressed() {
+  if (keyCode === ENTER && !mode) {
+    mode = 1;
+
+  } else if (keyCode === ENTER && mode) {
+    mode = 0;
+  }
+}
+
+function draw() {
+  //clear();
   
-  let grid;
-  let cols;
-  let rows;
-  let resolution = 10;
-  function setup() {
-    createCanvas(1920, 1080);
+  if (resolutionChanged || speedChanged) {
+    resolution = Rslider.value();
+    frameRate(Sslider.value());
     cols = floor(width / resolution);
     rows = floor(height / resolution);
     grid = make2DArray(cols, rows);
@@ -20,10 +59,12 @@ function make2DArray(cols, rows) {
         grid[i][j] = floor(random(2));
       }
     }
+    resolutionChanged = 0;
+    speedChanged = 0;
   }
-  
-  function draw() {
-      background(30);
+
+  if (mode == 1) {  
+    background(30);
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           let x = i * resolution;
@@ -53,18 +94,33 @@ function make2DArray(cols, rows) {
         }
       }
     }
+  
     grid = next;
   }
-  
-  function countNeighbors(grid, x, y) {
-    let sum = 0;
-    for (let i = -1; i < 2; i++) {
-      for (let j = -1; j < 2; j++) {
-        let col = (x + i + cols) % cols;
-        let row = (y + j + rows) % rows;
-        sum += grid[col][row];
-      }
+}
+
+function countNeighbors(grid, x, y) {
+  let sum = 0;
+  for (let i = -1; i < 2; i++) {
+    for (let j = -1; j < 2; j++) {
+      let col = (x + i + cols) % cols;
+      let row = (y + j + rows) % rows;
+      sum += grid[col][row];
     }
-    sum -= grid[x][y];
-    return sum;
   }
+  sum -= grid[x][y];
+  return sum;
+}
+
+ function fillGrid() {
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      grid[i][j] = floor(random(2));
+    }
+  }
+ }
+
+function touchEnded() {
+  resolutionChanged = 1;
+  speedChanged = 1;
+}
