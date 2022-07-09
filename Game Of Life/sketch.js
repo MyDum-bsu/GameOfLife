@@ -14,9 +14,11 @@ function make2DArray(cols, rows) {
   var cols;
   var rows;
   var resolution;
+  var density;
   var mode;
   let Rslider;
   let Sslider;
+  let Dslider;
   var randomMode;
 
 function setup() {
@@ -27,8 +29,10 @@ function setup() {
 
   Rslider = createSlider(2, 200, 5, 1);
   Sslider = createSlider(1, 60, 60, 1);
+  Dslider = createSlider(2, 200, 2, 1);
   resolution = Rslider.value();
   frameRate(Sslider.value());
+  density = Dslider.value();
   cols = floor(width / resolution);
   rows = floor(height / resolution);
   grid = make2DArray(cols, rows);
@@ -49,7 +53,9 @@ function draw() {
 
   ChangeSpeed();
 
-  AddRemoveOnMouseClick(grid);
+  ChangeDensity();
+
+  AddRemoveOnMouseClick(grid, resolution);
 
   if (mode == 1) {  
     background(30);
@@ -78,7 +84,7 @@ function countNeighbors(grid, x, y) {
  function fillGrid(grid, cols, rows) {
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
-      grid[i][j] = floor(random(2));
+      grid[i][j] = floor(random(density)) == 0;
     }
   }
  }
@@ -97,6 +103,12 @@ function countNeighbors(grid, x, y) {
  function ChangeSpeed() {
   if (frameRate() != Sslider.value()) {
     frameRate(Sslider.value());
+  }
+ }
+
+ function ChangeDensity() {
+  if (density != Dslider.value()) {
+    density = Dslider.value();
   }
  }
 
@@ -153,7 +165,7 @@ function countNeighbors(grid, x, y) {
   } 
  }
 
-function AddRemoveOnMouseClick(grid) {
+function AddRemoveOnMouseClick(grid, resolution) {
   if (mouseIsPressed === true) {
     if (mouseButton === LEFT) {
       var x = floor(mouseX / resolution);
