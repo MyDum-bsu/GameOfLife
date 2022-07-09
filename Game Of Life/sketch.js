@@ -20,15 +20,24 @@ function makeGrid(cols, rows) {
   let Rslider;
   let Sslider;
   let Dslider;
+
+  let Rcolor;
+  let Gcolor;
+  let Bcolor;
+
   var randomMode;
   let menuImage = null;
   let playImage = null;
   let settingsImage = null;
 
+  let sound = null;
+
 function preload() {
   menuImage = loadImage('images/Background.png');
   playImage = loadImage('images/play.png');
   settingsImage = loadImage('images/settings.png');
+
+//  sound = loadSound('music/JudasPriest-Genocide.mp3');
 }
 
 function setup() {
@@ -36,9 +45,11 @@ function setup() {
   setIsOpen = 0;
   randomMode = 1;
 
-  canvas = createCanvas(1920, 920);
-  canvas.parent('canvas');
+//sound.playMode('sustain');
 
+  canvas = createCanvas(1920, 892);
+  canvas.parent('canvas');
+ 
   Rslider = createSlider(2, 200, 3, 1);
   Sslider = createSlider(1, 60, 60, 1);
   Dslider = createSlider(2, 200, 9, 1);
@@ -50,6 +61,17 @@ function setup() {
   Sslider.hide();
   Dslider.hide();
 
+  Rcolor = createSlider(0, 255, 30, 1);
+  Gcolor = createSlider(0, 255, 30, 1);
+  Bcolor = createSlider(0, 255, 30, 1);
+  Rcolor.position(200, height);
+  Gcolor.position(200, height + 30);
+  Bcolor.position(200, height + 60);
+
+  Rcolor.hide();
+  Gcolor.hide();
+  Bcolor.hide();
+
   resolution = Rslider.value();
   frameRate(Sslider.value());
   density = Dslider.value();
@@ -60,13 +82,16 @@ function setup() {
 }
 
 function keyPressed() {
-  if (key === ' ' && !mode) {
-    changeMode();
-
-  } else if (key === ' ' && mode) {
+  if (key === ' ') {
     changeMode();
   }
+  // fullscreen on F.
+  if (keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
 }
+
 
 function draw() {
   
@@ -143,7 +168,7 @@ function countNeighbors(grid, x, y) {
  function drawCell(i, j) {
   let x = i * resolution;
   let y = j * resolution;
-  fill(90);
+  fill(Rcolor.value(), Gcolor.value(), Bcolor.value());
   stroke(200);
   rect(x, y, resolution - 1, resolution - 1);
  }
@@ -221,9 +246,17 @@ function Settings() {
     Rslider.show();
     Sslider.show();
     Dslider.show();
+
+    Rcolor.show();
+    Gcolor.show();
+    Bcolor.show();
   } else {
     Rslider.hide();
     Sslider.hide();
     Dslider.hide();
+
+    Rcolor.hide();
+    Gcolor.hide();
+    Bcolor.hide();
   }
 }
