@@ -1,4 +1,4 @@
-function make2DArray(cols, rows) {
+function makeGrid(cols, rows) {
   let arr = new Array(cols);
   for (let i = 0; i < cols; i++) {
     arr[i] = new Array(rows)
@@ -16,39 +16,61 @@ function make2DArray(cols, rows) {
   var resolution;
   var density;
   var mode;
+  var setIsOpen;
   let Rslider;
   let Sslider;
   let Dslider;
   var randomMode;
+  let menuImage = null;
+  let playImage = null;
+  let settingsImage = null;
+
+function preload() {
+  menuImage = loadImage('images/Background.png');
+  playImage = loadImage('images/play.png');
+  settingsImage = loadImage('images/settings.png');
+}
 
 function setup() {
   mode = 0;
+  setIsOpen = 0;
   randomMode = 1;
-  canvas = createCanvas(1920, 951);
+
+  canvas = createCanvas(1920, 920);
   canvas.parent('canvas');
 
-  Rslider = createSlider(2, 200, 5, 1);
+  Rslider = createSlider(2, 200, 3, 1);
   Sslider = createSlider(1, 60, 60, 1);
-  Dslider = createSlider(2, 200, 2, 1);
+  Dslider = createSlider(2, 200, 9, 1);
+  Rslider.position(10, height);
+  Sslider.position(10, height + 30);
+  Dslider.position(10, height + 60);
+
+  Rslider.hide();
+  Sslider.hide();
+  Dslider.hide();
+
   resolution = Rslider.value();
   frameRate(Sslider.value());
   density = Dslider.value();
+  
   cols = floor(width / resolution);
   rows = floor(height / resolution);
-  grid = make2DArray(cols, rows);
+  grid = makeGrid(cols, rows);
 }
 
 function keyPressed() {
-  if (keyCode === ENTER && !mode) {
-    mode = 1;
+  if (key === ' ' && !mode) {
+    changeMode();
 
-  } else if (keyCode === ENTER && mode) {
-    mode = 0;
+  } else if (key === ' ' && mode) {
+    changeMode();
   }
 }
 
 function draw() {
   
+
   ChangeResolution();
 
   ChangeSpeed();
@@ -96,7 +118,7 @@ function countNeighbors(grid, x, y) {
     resolution = Rslider.value();
     cols = floor(width / resolution);
     rows = floor(height / resolution);
-    grid = make2DArray(cols, rows);
+    grid = makeGrid(cols, rows);
   }
  }
 
@@ -109,14 +131,16 @@ function countNeighbors(grid, x, y) {
  function ChangeDensity() {
   if (density != Dslider.value()) {
     density = Dslider.value();
+    fillGrid(grid, cols, rows);
   }
+  
  }
 
  function ValidateMousePosition(x, y) {
    return x >= 0 && y >= 0 && x < cols && y < rows;
  }
  
- function fillCell(i, j) {
+ function drawCell(i, j) {
   let x = i * resolution;
   let y = j * resolution;
   fill(90);
@@ -133,7 +157,7 @@ function countNeighbors(grid, x, y) {
  }
 
  function nextGeneration(grid) {
-  let next = make2DArray(cols, rows);
+  let next = makeGrid(cols, rows);
   
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
@@ -159,7 +183,7 @@ function countNeighbors(grid, x, y) {
       let x = i * resolution;
       let y = j * resolution;
       if (grid[i][j] == 1) {
-        fillCell(i, j);
+        drawCell(i, j);
       }
     }
   } 
@@ -172,7 +196,7 @@ function AddRemoveOnMouseClick(grid, resolution) {
       var y = floor(mouseY / resolution);
       if (ValidateMousePosition(x, y) == 1) {
         grid[x][y] = 1;
-        fillCell(x, y);
+        drawCell(x, y);
         randomMode = 0;
       }
     }
@@ -184,5 +208,22 @@ function AddRemoveOnMouseClick(grid, resolution) {
         removeCell(x, y);
         }
     }
+  }
+}
+
+function changeMode() {
+  mode = mode == 1 ? 0 : 1;
+}
+
+function Settings() {
+  setIsOpen = setIsOpen == 0 ? 1 : 0;
+  if (setIsOpen) {
+    Rslider.show();
+    Sslider.show();
+    Dslider.show();
+  } else {
+    Rslider.hide();
+    Sslider.hide();
+    Dslider.hide();
   }
 }
