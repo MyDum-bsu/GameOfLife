@@ -13,10 +13,13 @@ function makeGrid(cols, rows) {
   var grid;
   var cols;
   var rows;
+
   var resolution;
   var density;
+
   var mode;
   var setIsOpen;
+
   let Rslider;
   let Sslider;
   let Dslider;
@@ -24,6 +27,9 @@ function makeGrid(cols, rows) {
   let Rcolor;
   let Gcolor;
   let Bcolor;
+
+  let birth = [];
+  let survive = [];
 
   var randomMode;
   let menuImage = null;
@@ -45,13 +51,16 @@ function setup() {
   setIsOpen = 0;
   randomMode = 1;
 
+  birth = [3];
+  survive = [2, 3];
+
 //sound.playMode('sustain');
 
   canvas = createCanvas(1920, 892);
   canvas.parent('canvas');
  
   Rslider = createSlider(2, 200, 3, 1);
-  Sslider = createSlider(1, 60, 60, 1);
+  Sslider = createSlider(1, 240, 60, 1);
   Dslider = createSlider(2, 200, 9, 1);
   Rslider.position(10, height);
   Sslider.position(10, height + 30);
@@ -61,9 +70,9 @@ function setup() {
   Sslider.hide();
   Dslider.hide();
 
-  Rcolor = createSlider(0, 255, 30, 1);
-  Gcolor = createSlider(0, 255, 30, 1);
-  Bcolor = createSlider(0, 255, 30, 1);
+  Rcolor = createSlider(0, 255, int(random(0, 255)), 1);
+  Gcolor = createSlider(0, 255, int(random(0, 255)), 1);
+  Bcolor = createSlider(0, 255, int(random(0, 255)), 1);
   Rcolor.position(200, height);
   Gcolor.position(200, height + 30);
   Bcolor.position(200, height + 60);
@@ -96,6 +105,7 @@ function keyPressed() {
 function draw() {
   
 
+
   ChangeResolution();
 
   ChangeSpeed();
@@ -115,7 +125,7 @@ function draw() {
   }
 }
 
-function countNeighbors(grid, x, y) {
+function countNeighbors(x, y) {
   let sum = 0;
   for (let i = -1; i < 2; i++) {
     for (let j = -1; j < 2; j++) {
@@ -169,8 +179,8 @@ function countNeighbors(grid, x, y) {
   let x = i * resolution;
   let y = j * resolution;
   fill(Rcolor.value(), Gcolor.value(), Bcolor.value());
-  stroke(200);
-  rect(x, y, resolution - 1, resolution - 1);
+  noStroke();
+  rect(x, y, resolution - 1, resolution - 1 );
  }
 
  function removeCell(i, j) {
@@ -182,21 +192,10 @@ function countNeighbors(grid, x, y) {
  }
 
  function nextGeneration(grid) {
-  let next = makeGrid(cols, rows);
-  
+  let next = makeGrid(cols, rows);  
   for (let i = 0; i < cols; i++) {
     for (let j = 0; j < rows; j++) {
-      let state = grid[i][j];
-      let sum = 0;
-      let neighbors = countNeighbors(grid, i, j);
-
-      if (state == 0 && neighbors == 3) {
-        next[i][j] = 1;
-      } else if (state == 1 && (neighbors < 2 || neighbors > 3)) {
-        next[i][j] = 0;
-      } else {
-        next[i][j] = state;
-      }
+      cellEvolve(next, i, j);
     }
   }
   return next;
@@ -260,3 +259,48 @@ function Settings() {
     Bcolor.hide();
   }
 }
+
+function cellEvolve(next, i, j) {
+  let state = grid[i][j];
+  let neighbors = countNeighbors(i, j);
+  if (state == 0 && cellBirth(neighbors)) {
+    next[i][j] = 1;
+  } else if (state == 1 && !cellSurvive(neighbors)) {
+    next[i][j] = 0;
+  } else {
+    next[i][j] = state;
+  }
+}
+
+function cellBirth(neighbors) { 
+  for (let i = 0; i < birth.length; i++) {
+    if (neighbors == birth[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+function cellSurvive(neighbors) {
+  for (let i = 0; i < survive.length; i++) {
+    if (neighbors == survive[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// function changeRule() {
+//   let i = 1;
+//   birth = [];
+//   survive = [];
+//   while (document.getElementsByName("rule")[i] != '/') {
+//     birth.push(document.getElementsByName("rule")[i]);
+//     i += 2;
+//   }
+
+//   i++;
+//   for (i; i < document.getElementsByName("rule").length; i++) {
+//     survive.push(document.getElementsByName("rule")[i])
+//   }
+  
+// }
