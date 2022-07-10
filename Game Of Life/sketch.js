@@ -19,6 +19,7 @@ function makeGrid(cols, rows) {
 
   var mode;
   var setIsOpen;
+  var clickAvailable;
 
   let Rslider;
   let Sslider;
@@ -36,25 +37,15 @@ function makeGrid(cols, rows) {
   let playImage = null;
   let settingsImage = null;
 
-  let sound = null;
-
-function preload() {
-  menuImage = loadImage('images/Background.png');
-  playImage = loadImage('images/play.png');
-  settingsImage = loadImage('images/settings.png');
-
-//  sound = loadSound('music/JudasPriest-Genocide.mp3');
-}
 
 function setup() {
   mode = 0;
   setIsOpen = 0;
   randomMode = 1;
+  clickAvailable = 1;
 
   birth = [3];
   survive = [2, 3];
-
-//sound.playMode('sustain');
 
   canvas = createCanvas(1920, 892);
   canvas.parent('canvas');
@@ -62,9 +53,10 @@ function setup() {
   Rslider = createSlider(2, 200, 3, 1);
   Sslider = createSlider(1, 240, 60, 1);
   Dslider = createSlider(2, 200, 9, 1);
-  Rslider.position(10, height);
-  Sslider.position(10, height + 30);
-  Dslider.position(10, height + 60);
+
+  Rslider.position(width / 2 - 140, height / 2 - 200 + 40);
+  Sslider.position(width / 2 - 140, height / 2 - 200 + 70);
+  Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
 
   Rslider.hide();
   Sslider.hide();
@@ -73,9 +65,10 @@ function setup() {
   Rcolor = createSlider(0, 255, int(random(0, 255)), 1);
   Gcolor = createSlider(0, 255, int(random(0, 255)), 1);
   Bcolor = createSlider(0, 255, int(random(0, 255)), 1);
-  Rcolor.position(200, height);
-  Gcolor.position(200, height + 30);
-  Bcolor.position(200, height + 60);
+
+  Rcolor.position(width / 2 - 140, height / 2 - 200 + 190);
+  Gcolor.position(width / 2 - 140, height / 2 - 200 + 220);
+  Bcolor.position(width / 2 - 140, height / 2 - 200 + 250);
 
   Rcolor.hide();
   Gcolor.hide();
@@ -99,12 +92,13 @@ function keyPressed() {
     let fs = fullscreen();
     fullscreen(!fs);
   }
+  if (keyCode === 27) {
+    Settings();
+  }
 }
 
 
 function draw() {
-  
-
 
   ChangeResolution();
 
@@ -114,13 +108,20 @@ function draw() {
 
   AddRemoveOnMouseClick(grid, resolution);
 
-  if (mode == 1) {  
+  if (setIsOpen == 1) {
+      background(30);
+      fill(3, 3, 3);
+      rect(width / 2 - 150, height / 2 - 200, 300, 400, 50, 50);  
+      drawGrid(grid);
+      openSettings();  
+  }
+  if (mode == 1) {      
     background(30);
     if (randomMode == 1) {
       fillGrid(grid, cols, rows);
       randomMode = 0;
     }
-    drawGrid(grid);   
+    drawGrid(grid);
     grid = nextGeneration(grid);
   }
 }
@@ -148,7 +149,6 @@ function countNeighbors(x, y) {
 
  function ChangeResolution() {
   if (resolution != Rslider.value()) {
-    background(30);
     randomMode = 1;
     resolution = Rslider.value();
     cols = floor(width / resolution);
@@ -178,7 +178,10 @@ function countNeighbors(x, y) {
  function drawCell(i, j) {
   let x = i * resolution;
   let y = j * resolution;
-  fill(Rcolor.value(), Gcolor.value(), Bcolor.value());
+  var redC = Rcolor.value();
+  var greenC = Gcolor.value();
+  var blueC = Bcolor.value();
+  fill(redC, greenC, blueC);
   noStroke();
   rect(x, y, resolution - 1, resolution - 1 );
  }
@@ -214,7 +217,7 @@ function countNeighbors(x, y) {
  }
 
 function AddRemoveOnMouseClick(grid, resolution) {
-  if (mouseIsPressed === true) {
+  if (mouseIsPressed === true && clickAvailable) {
     if (mouseButton === LEFT) {
       var x = floor(mouseX / resolution);
       var y = floor(mouseY / resolution);
@@ -237,27 +240,67 @@ function AddRemoveOnMouseClick(grid, resolution) {
 
 function changeMode() {
   mode = mode == 1 ? 0 : 1;
+  changePlayPicture();
+  closeSettings();
+  setIsOpen = 0;
+}
+
+function changePlayPicture() {
+  var playPauseImages = new Array('images/play.png', 'images/pause.png');
+  var pp = document.getElementById("playpause");
+  pp.src = playPauseImages[mode];
 }
 
 function Settings() {
   setIsOpen = setIsOpen == 0 ? 1 : 0;
+  changePlayPicture();
+
   if (setIsOpen) {
-    Rslider.show();
-    Sslider.show();
-    Dslider.show();
 
-    Rcolor.show();
-    Gcolor.show();
-    Bcolor.show();
+  Rslider.show();
+  Sslider.show();
+  Dslider.show();
+  
+  Rcolor.show();
+  Gcolor.show();
+  Bcolor.show();
+  openSettings();
   } else {
-    Rslider.hide();
-    Sslider.hide();
-    Dslider.hide();
-
-    Rcolor.hide();
-    Gcolor.hide();
-    Bcolor.hide();
+    closeSettings();
+    mode = 1; 
   }
+}
+
+function closeSettings() {
+  clickAvailable = 1;
+  
+  Rslider.hide();
+  Sslider.hide();
+  Dslider.hide();
+  
+  Rcolor.hide();
+  Gcolor.hide();
+  Bcolor.hide();
+}
+
+function openSettings() {
+  mode = 0;
+  clickAvailable = 0;
+
+  fill(255, 255, 255);
+  textSize(15);
+  textFont('Courier');
+  text('resolution',width / 2 + 60, Rslider.y + 14);
+  text('speed',width / 2 + 60, Rslider.y + 44);
+  text('density',width / 2 + 60, Rslider.y + 74);
+
+  text('red',width / 2 + 60, Rslider.y + 164);
+  text('green',width / 2 + 60, Rslider.y + 194);
+  text('blue',width / 2 + 60, Rslider.y + 224);
+  textAlign(CENTER);
+  text('The color of cell', width / 2, Rslider.y + 120);
+  text('field parameters', width / 2, height / 2 - 175);
+  
 }
 
 function cellEvolve(next, i, j) {
@@ -280,6 +323,7 @@ function cellBirth(neighbors) {
   }
   return false;
 }
+
 function cellSurvive(neighbors) {
   for (let i = 0; i < survive.length; i++) {
     if (neighbors == survive[i]) {
