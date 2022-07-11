@@ -32,35 +32,37 @@ function makeGrid(cols, rows) {
   let survive = [];
 
   let inputBirthSurvive;
-  let acceptRule;
+  
+  let RandomCheckBox; 
 
   var randomMode;
   let menuImage = null;
   let playImage = null;
   let settingsImage = null;
-
-
+  let updated;
 function setup() {
   mode = 0;
   setIsOpen = 0;
   randomMode = 1;
+  updated = 1;
 
   birth = [3];
   survive = [2, 3];
 
   inputBirthSurvive = createInput('B3/S23');
-  inputBirthSurvive.position(width / 2, height / 2 + 480);
+  inputBirthSurvive.position(width / 2, height / 2 + 500);
   inputBirthSurvive.center('horizontal');
   inputBirthSurvive.attribute('placeholder', 'B3/S23');
+  inputBirthSurvive.input(changeRule);
 
-  acceptRule = createButton('OK');
-  acceptRule.style('background-color', color(30, 30, 30));
-  acceptRule.style('border',0);
-  acceptRule.style('border-radius', '10px');
-  acceptRule.style('color', 'white');
-  acceptRule.style('font-family', 'Courier');
-  acceptRule.position(width / 2 + 782, height / 2 + 482);
-  acceptRule.mousePressed(changeRule());
+
+  RandomCheckBox = createCheckbox('random mode', true);
+  RandomCheckBox.style('font-family', 'Courier');
+  RandomCheckBox.style('background-color', color(0, 0, 0));
+  RandomCheckBox.style('border-radius', '10px');
+  RandomCheckBox.style('color', 'white');
+  RandomCheckBox.position(width / 2 + 770, height / 2 + 320);
+  RandomCheckBox.changed(changeRandomMode);
 
   canvas = createCanvas(1920, 892);
   canvas.parent('canvas');
@@ -74,13 +76,13 @@ function setup() {
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
 
   CellColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
-  CellColorPicker.position(width / 2, height / 2 - 30);
+  CellColorPicker.position(width / 2, height / 2 - 20);
   CellColorPicker.center('horizontal');
   CellColorPicker.style('background-color', color('black'));
   CellColorPicker.style('border', 0);
 
   BackgroundColorPicker = createColorPicker(color(30, 30, 30));
-  BackgroundColorPicker.position(width / 2, height / 2 + 30);
+  BackgroundColorPicker.position(width / 2, height / 2 + 40);
   BackgroundColorPicker.center('horizontal');
   BackgroundColorPicker.style('background-color', color('black'));
   BackgroundColorPicker.style('border', 0);
@@ -94,6 +96,9 @@ function setup() {
   cols = floor(width / resolution);
   rows = floor(height / resolution);
   grid = makeGrid(cols, rows);
+}
+function changeRandomMode() {
+  randomMode = randomMode == 1 ? 0 : 1;
 }
 
 function keyPressed() {
@@ -131,9 +136,9 @@ function draw() {
   }
   if (mode == 1) {      
     background(BackgroundColorPicker.color());
-    if (randomMode == 1) {
+    if (randomMode == 1 && updated) {
       fillGrid(grid, cols, rows);
-      randomMode = 0;
+      updated = 0;
     }
     drawGrid(grid);
     grid = nextGeneration(grid);
@@ -163,7 +168,7 @@ function countNeighbors(x, y) {
 
  function ChangeResolution() {
   if (resolution != Rslider.value()) {
-    randomMode = 1;
+    updated = 1;
     resolution = Rslider.value();
     cols = floor(width / resolution);
     rows = floor(height / resolution);
@@ -180,9 +185,10 @@ function countNeighbors(x, y) {
  function ChangeDensity() {
   if (density != Dslider.value()) {
     density = Dslider.value();
-    fillGrid(grid, cols, rows);
+    if (randomMode == 1) {
+      fillGrid(grid, cols, rows);
+    }
   }
-  
  }
 
  function ValidateMousePosition(x, y) {
@@ -277,7 +283,7 @@ function Settings() {
   BackgroundColorPicker.show();
 
   inputBirthSurvive.show();
-    acceptRule.show();
+  RandomCheckBox.show();
   openSettings();
   } else {
     closeSettings();
@@ -296,7 +302,7 @@ function closeSettings() {
   BackgroundColorPicker.hide();
 
   inputBirthSurvive.hide();
-  acceptRule.hide();
+  RandomCheckBox.hide();
 }
 
 function openSettings() {
@@ -311,10 +317,10 @@ function openSettings() {
   text('density',width / 2 + 60, Rslider.y + 74);
   textAlign(CENTER);
 
-  text('cell color', width / 2, height / 2 - 40);
-  text('background color', width / 2, height / 2 + 20);
+  text('cell color', width / 2, height / 2 - 30);
+  text('background color', width / 2, height / 2 + 30);
   text('field parameters', width / 2, height / 2 - 175);
-  text('game rule', width / 2, height / 2 + 70);
+  text('game rule', width / 2, height / 2 + 90);
 }
 
 function cellEvolve(next, i, j) {
