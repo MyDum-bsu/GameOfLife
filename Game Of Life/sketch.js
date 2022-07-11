@@ -6,15 +6,15 @@ function setup() {
   canvas = createCanvas(1920, 892);
   canvas.parent('canvas');
 
-  Initialization();
-  CreateSettings();
-  CloseSettings();
+   //Initialization();
+   //CreateSettings();
+   //CloseSettings();
 
-  //BJ_Initialization();
+  BJ_Initialization();
 }
 
 function draw() {
 
-  GameLife();
-  //BJReaction();
+  //GameLife();
+  BJReaction();
 }
