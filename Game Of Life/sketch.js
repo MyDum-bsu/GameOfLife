@@ -25,12 +25,14 @@ function makeGrid(cols, rows) {
   let Sslider;
   let Dslider;
 
-  let Rcolor;
-  let Gcolor;
-  let Bcolor;
+  let CellColorPicker;
+  let BackgroundColorPicker;
 
   let birth = [];
   let survive = [];
+
+  let inputBirthSurvive;
+  let acceptRule;
 
   var randomMode;
   let menuImage = null;
@@ -42,10 +44,23 @@ function setup() {
   mode = 0;
   setIsOpen = 0;
   randomMode = 1;
-  clickAvailable = 1;
 
   birth = [3];
   survive = [2, 3];
+
+  inputBirthSurvive = createInput('B3/S23');
+  inputBirthSurvive.position(width / 2, height / 2 + 480);
+  inputBirthSurvive.center('horizontal');
+  inputBirthSurvive.attribute('placeholder', 'B3/S23');
+
+  acceptRule = createButton('OK');
+  acceptRule.style('background-color', color(30, 30, 30));
+  acceptRule.style('border',0);
+  acceptRule.style('border-radius', '10px');
+  acceptRule.style('color', 'white');
+  acceptRule.style('font-family', 'Courier');
+  acceptRule.position(width / 2 + 782, height / 2 + 482);
+  acceptRule.mousePressed(changeRule());
 
   canvas = createCanvas(1920, 892);
   canvas.parent('canvas');
@@ -58,21 +73,19 @@ function setup() {
   Sslider.position(width / 2 - 140, height / 2 - 200 + 70);
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
 
-  Rslider.hide();
-  Sslider.hide();
-  Dslider.hide();
+  CellColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
+  CellColorPicker.position(width / 2, height / 2 - 30);
+  CellColorPicker.center('horizontal');
+  CellColorPicker.style('background-color', color('black'));
+  CellColorPicker.style('border', 0);
 
-  Rcolor = createSlider(0, 255, int(random(0, 255)), 1);
-  Gcolor = createSlider(0, 255, int(random(0, 255)), 1);
-  Bcolor = createSlider(0, 255, int(random(0, 255)), 1);
+  BackgroundColorPicker = createColorPicker(color(30, 30, 30));
+  BackgroundColorPicker.position(width / 2, height / 2 + 30);
+  BackgroundColorPicker.center('horizontal');
+  BackgroundColorPicker.style('background-color', color('black'));
+  BackgroundColorPicker.style('border', 0);
 
-  Rcolor.position(width / 2 - 140, height / 2 - 200 + 190);
-  Gcolor.position(width / 2 - 140, height / 2 - 200 + 220);
-  Bcolor.position(width / 2 - 140, height / 2 - 200 + 250);
-
-  Rcolor.hide();
-  Gcolor.hide();
-  Bcolor.hide();
+  closeSettings();
 
   resolution = Rslider.value();
   frameRate(Sslider.value());
@@ -109,14 +122,15 @@ function draw() {
   AddRemoveOnMouseClick(grid, resolution);
 
   if (setIsOpen == 1) {
-      background(30);
-      fill(3, 3, 3);
-      rect(width / 2 - 150, height / 2 - 200, 300, 400, 50, 50);  
+      background(BackgroundColorPicker.color());
       drawGrid(grid);
+      fill(0, 0, 0);
+      rect(width / 2 - 150, height / 2 - 200, 300, 400, 50, 50);  
+      
       openSettings();  
   }
   if (mode == 1) {      
-    background(30);
+    background(BackgroundColorPicker.color());
     if (randomMode == 1) {
       fillGrid(grid, cols, rows);
       randomMode = 0;
@@ -178,10 +192,7 @@ function countNeighbors(x, y) {
  function drawCell(i, j) {
   let x = i * resolution;
   let y = j * resolution;
-  var redC = Rcolor.value();
-  var greenC = Gcolor.value();
-  var blueC = Bcolor.value();
-  fill(redC, greenC, blueC);
+  fill(CellColorPicker.color());
   noStroke();
   rect(x, y, resolution - 1, resolution - 1 );
  }
@@ -217,7 +228,7 @@ function countNeighbors(x, y) {
  }
 
 function AddRemoveOnMouseClick(grid, resolution) {
-  if (mouseIsPressed === true && clickAvailable) {
+  if (clickAvailable) {
     if (mouseButton === LEFT) {
       var x = floor(mouseX / resolution);
       var y = floor(mouseY / resolution);
@@ -239,14 +250,15 @@ function AddRemoveOnMouseClick(grid, resolution) {
 }
 
 function changeMode() {
-  mode = mode == 1 ? 0 : 1;
+
   changePlayPicture();
   closeSettings();
   setIsOpen = 0;
+  mode = mode == 1 ? 0 : 1;
 }
 
 function changePlayPicture() {
-  var playPauseImages = new Array('images/play.png', 'images/pause.png');
+  var playPauseImages = new Array('images/pause.png', 'images/play.png');
   var pp = document.getElementById("playpause");
   pp.src = playPauseImages[mode];
 }
@@ -261,9 +273,11 @@ function Settings() {
   Sslider.show();
   Dslider.show();
   
-  Rcolor.show();
-  Gcolor.show();
-  Bcolor.show();
+  CellColorPicker.show();
+  BackgroundColorPicker.show();
+
+  inputBirthSurvive.show();
+    acceptRule.show();
   openSettings();
   } else {
     closeSettings();
@@ -278,9 +292,11 @@ function closeSettings() {
   Sslider.hide();
   Dslider.hide();
   
-  Rcolor.hide();
-  Gcolor.hide();
-  Bcolor.hide();
+  CellColorPicker.hide();
+  BackgroundColorPicker.hide();
+
+  inputBirthSurvive.hide();
+  acceptRule.hide();
 }
 
 function openSettings() {
@@ -293,14 +309,12 @@ function openSettings() {
   text('resolution',width / 2 + 60, Rslider.y + 14);
   text('speed',width / 2 + 60, Rslider.y + 44);
   text('density',width / 2 + 60, Rslider.y + 74);
-
-  text('red',width / 2 + 60, Rslider.y + 164);
-  text('green',width / 2 + 60, Rslider.y + 194);
-  text('blue',width / 2 + 60, Rslider.y + 224);
   textAlign(CENTER);
-  text('The color of cell', width / 2, Rslider.y + 120);
+
+  text('cell color', width / 2, height / 2 - 40);
+  text('background color', width / 2, height / 2 + 20);
   text('field parameters', width / 2, height / 2 - 175);
-  
+  text('game rule', width / 2, height / 2 + 70);
 }
 
 function cellEvolve(next, i, j) {
@@ -333,18 +347,23 @@ function cellSurvive(neighbors) {
   return false;
 }
 
-// function changeRule() {
-//   let i = 1;
-//   birth = [];
-//   survive = [];
-//   while (document.getElementsByName("rule")[i] != '/') {
-//     birth.push(document.getElementsByName("rule")[i]);
-//     i += 2;
-//   }
+function changeRule() {
+  let i = 1;
+  birth = [];
+  survive = [];
+  while (inputBirthSurvive.value()[i] != '/') {
+    birth.push(inputBirthSurvive.value()[i]);
+    i++;
+  }
+  i += 2;
+  for (i; i < inputBirthSurvive.value().length; i++) {
+    survive.push(inputBirthSurvive.value()[i]);
+  }
+  if (birth.length == 0) {
+    birth = [3];
+  } 
+  if (survive.length == 0) {
+    survive = [2, 3];
+  }
 
-//   i++;
-//   for (i; i < document.getElementsByName("rule").length; i++) {
-//     survive.push(document.getElementsByName("rule")[i])
-//   }
-  
-// }
+}
