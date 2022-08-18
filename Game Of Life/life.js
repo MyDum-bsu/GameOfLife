@@ -1,12 +1,13 @@
+let grid;
+let cols;
+let rows;
 
-var grid;
-var cols;
-var rows;
-
-var mode;
-var setIsOpen;
-var clickAvailable;
-var randomMode;
+let mode;
+let setIsOpen;
+let clickAvailable;
+let randomMode;
+let MultiMode;
+let shape;
 let updated;
 
 let birth = [];
@@ -16,7 +17,9 @@ function Initialization() {
     mode = 0;
     setIsOpen = 0;
     randomMode = 1;
+    MultiMode = 0;
     updated = 1;
+    shape = 'rect';
   
     birth = [3];
     survive = [2, 3];
@@ -58,9 +61,27 @@ function countNeighbors(x, y) {
 function drawCell(i, j) {
     let x = i * resolution;
     let y = j * resolution;
-    fill(CellColorPicker.color());
+    color_ = CellColorPicker.color();
+    fill(color_);
+    if (MultiMode) {
+      if (countNeighbors(i, j) == Math.max.apply(null, birth)) {
+        fill(228, 158, 166);
+      }
+      else if (countNeighbors(i, j) == Math.min.apply(null, survive)) {
+        fill(101, 89, 131);
+      } else if (countNeighbors(i, j) == Math.min.apply(null, survive) - 1) {
+        fill(144, 178, 201);
+      } else if (countNeighbors(i, j) == Math.max.apply(null, survive) + 1) {
+        fill(227, 10, 7);
+      }
+    }
     noStroke();
+    if (shape == 'rect') {
     rect(x, y, resolution - 1, resolution - 1 );
+
+    } else if (shape == 'circle') {
+      circle(x + resolution / 2, y + resolution / 2, resolution - 1);
+    }
 }
 
 function removeCell(i, j) {
@@ -113,7 +134,7 @@ function cellEvolve(next, i, j) {
     }
 }
 
-function nextGeneration(grid) {
+function nextGeneration() {
     let next = makeGrid(cols, rows);  
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
@@ -131,9 +152,8 @@ function GameLife() {
       background(BackgroundColorPicker.color());
       drawGrid(grid);
       fill(0, 0, 0);
-      rect(width / 2 - 150, height / 2 - 200, 300, 400, 50, 50);  
-      
-      openSettings();  
+      rect(width / 2 - 150, height / 2 - 200, 300, 400, 50, 50);
+      openSettings();
   }
   if (mode == 1) {      
     background(BackgroundColorPicker.color());
@@ -141,8 +161,8 @@ function GameLife() {
       fillGrid(grid, cols, rows);
       updated = 0;
     }
-    drawGrid(grid);
     grid = nextGeneration(grid);
+    drawGrid(grid);    
   }
 }
 
@@ -167,7 +187,7 @@ function AddRemoveOnMouseClick(grid, resolution) {
       }
     }
 }
-  
+
 function ValidateMousePosition(x, y) {
     return x >= 0 && y >= 0 && x < cols && y < rows;
 }

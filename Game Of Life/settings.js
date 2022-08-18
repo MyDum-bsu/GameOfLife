@@ -5,38 +5,60 @@ let Dslider;
 let CellColorPicker;
 let BackgroundColorPicker;
 let inputBirthSurvive;
-let RandomCheckBox; 
+let RandomCheckBox;
+let MultiColorCheckBox;
+let ShapeSelect;
 
-var resolution;
-var density;
+let resolution;
+let density;
 
 function CreateSettings() {
-
   inputBirthSurvive = createInput('B3/S23');
   inputBirthSurvive.position(width / 2, height / 2 + 110);
   inputBirthSurvive.center('horizontal');
   inputBirthSurvive.attribute('placeholder', 'B3/S23');
   inputBirthSurvive.input(ChangeRule);
 
-  RandomCheckBox = createCheckbox('random mode', true);
+  RandomCheckBox = createCheckbox('random', true);
+  MultiColorCheckBox = createCheckbox('multi-color', false);
   RandomCheckBox.style('font-family', 'Courier');
   RandomCheckBox.style('background-color', color(0, 0, 0));
   RandomCheckBox.style('border-radius', '10px');
   RandomCheckBox.style('color', 'white');
   RandomCheckBox.position(width / 2 - 140, height / 2 -70);
   RandomCheckBox.changed(ChangeRandomMode);
- 
+
+  MultiColorCheckBox.style('font-family', 'Courier');
+  MultiColorCheckBox.style('background-color', color(0, 0, 0));
+  MultiColorCheckBox.style('border-radius', '10px');
+  MultiColorCheckBox.style('color', 'white');
+  MultiColorCheckBox.position(width / 2, height / 2 -70);
+  MultiColorCheckBox.changed(ChangeMultiMode);
+  
+  ShapeSelect = createRadio();
+  ShapeSelect.style('font-family', 'Courier');
+  ShapeSelect.style('color', 'white');
+  ShapeSelect.option('circle');
+  ShapeSelect.option('rect');
+  ShapeSelect.position(width / 2 - 25, height / 2 + 150);
+  ShapeSelect.selected('rect');
+  ShapeSelect.center('horizontal');
+  ShapeSelect.style('background-color', color('black'));
+  ShapeSelect.style('border', 0);
+  ShapeSelect.changed(ChangeShape);
+
+
   Rslider = createSlider(2, 200, 5, 1);
   Sslider = createSlider(1, 240, 60, 1);
   Dslider = createSlider(2, 200, 9, 1);
 
-    resolution = Rslider.value();
-    frameRate(Sslider.value());
-    density = Dslider.value();
+  resolution = Rslider.value();
+  frameRate(Sslider.value());
+  density = Dslider.value();
 
-    cols = floor(width / resolution);
-    rows = floor(height / resolution);
-    grid = makeGrid(cols, rows);   
+  cols = floor(width / resolution);
+  rows = floor(height / resolution);
+  grid = makeGrid(cols, rows);   
 
   Rslider.position(width / 2 - 140, height / 2 - 200 + 40);
   Sslider.position(width / 2 - 140, height / 2 - 200 + 70);
@@ -57,14 +79,6 @@ function CreateSettings() {
 
 function Settings() {
     setIsOpen = setIsOpen == 0 ? 1 : 0;
-    if (mode == 1) {
-    changePlayPicture();
-    }
-  
-    if (mode == 0 && !setIsOpen) {
-      changePlayPicture();
-    }
-  
     if (setIsOpen) {
   
     Rslider.show();
@@ -74,6 +88,8 @@ function Settings() {
     BackgroundColorPicker.show();
     inputBirthSurvive.show();
     RandomCheckBox.show();
+    MultiColorCheckBox.show();
+    ShapeSelect.show();
     openSettings();
     } else {
       CloseSettings();
@@ -93,6 +109,8 @@ function CloseSettings() {
   
     inputBirthSurvive.hide();
     RandomCheckBox.hide();
+    MultiColorCheckBox.hide();
+    ShapeSelect.hide();
 }
   
 function openSettings() {
@@ -113,7 +131,6 @@ function openSettings() {
     text('speed',width / 2 + 60, Rslider.y + 44);
     text('density',width / 2 + 60, Rslider.y + 74);
     textAlign(CENTER);
-  
     text('cell color', width / 2, height / 2 - 30);
     text('background color', width / 2, height / 2 + 30);
     text('field parameters', width / 2, height / 2 - 175);
@@ -128,7 +145,7 @@ function ChangeRule() {
       birth.push(inputBirthSurvive.value()[i]);
       i++;
     }
-    i += 2;
+    i++;
     for (i; i < inputBirthSurvive.value().length; i++) {
       survive.push(inputBirthSurvive.value()[i]);
     }
@@ -138,6 +155,8 @@ function ChangeRule() {
     if (survive.length == 0) {
       survive = [2, 3];
     }
+  // interesting rules: 
+  // B34/S234   B2/S012345678   B234/S23
   
 }
 
@@ -183,17 +202,25 @@ function ChangeDensity() {
 function ChangeRandomMode() {
     randomMode = randomMode == 1 ? 0 : 1;
 }
+
+function ChangeMultiMode() {
+  MultiMode = MultiMode == 0 ? 1 : 0;
+} 
   
 function ChangeMode() {
 
-    changePlayPicture();
     CloseSettings();
     setIsOpen = 0;
     mode = mode == 1 ? 0 : 1;
 }
 
-  function changePlayPicture() {
-    var playPauseImages = new Array('images/pause.png', 'images/play.png');
-    var pp = document.getElementById("playpause");
-    pp.src = playPauseImages[mode];
+// function changePlayPicture() {
+//   var playPauseImages = new Array('images/pause.png', 'images/play.png');
+//   // var pp = document.getElementById("playpause");
+//   // pp.src = playPauseImages[mode];
+//   PlayButton.style('img', playPauseImages[mode]);
+// }
+
+function ChangeShape() {
+  shape = ShapeSelect.value();
 }
