@@ -14,13 +14,12 @@ let density;
 
 function CreateSettings() {
   inputBirthSurvive = createInput('B3/S23');
-  inputBirthSurvive.position(width / 2, height / 2 + 110);
+  inputBirthSurvive.position(width / 2, height / 2 +75);
   inputBirthSurvive.center('horizontal');
   inputBirthSurvive.attribute('placeholder', 'B3/S23');
   inputBirthSurvive.input(ChangeRule);
 
   RandomCheckBox = createCheckbox('random', true);
-  MultiColorCheckBox = createCheckbox('multi-color', false);
   RandomCheckBox.style('font-family', 'Courier');
   RandomCheckBox.style('background-color', color(0, 0, 0));
   RandomCheckBox.style('border-radius', '10px');
@@ -28,6 +27,7 @@ function CreateSettings() {
   RandomCheckBox.position(width / 2 - 140, height / 2 -70);
   RandomCheckBox.changed(ChangeRandomMode);
 
+  MultiColorCheckBox = createCheckbox('multi-color', false);
   MultiColorCheckBox.style('font-family', 'Courier');
   MultiColorCheckBox.style('background-color', color(0, 0, 0));
   MultiColorCheckBox.style('border-radius', '10px');
@@ -40,7 +40,7 @@ function CreateSettings() {
   ShapeSelect.style('color', 'white');
   ShapeSelect.option('circle');
   ShapeSelect.option('rect');
-  ShapeSelect.position(width / 2 - 25, height / 2 + 150);
+  ShapeSelect.position(width / 2 - 25, height / 2 + 20);
   ShapeSelect.selected('rect');
   ShapeSelect.center('horizontal');
   ShapeSelect.style('background-color', color('black'));
@@ -50,7 +50,7 @@ function CreateSettings() {
 
   Rslider = createSlider(2, 200, 5, 1);
   Sslider = createSlider(1, 240, 60, 1);
-  Dslider = createSlider(2, 200, 9, 1);
+  Dslider = createSlider(1, 200, 9, 1);
 
   resolution = Rslider.value();
   frameRate(Sslider.value());
@@ -64,15 +64,17 @@ function CreateSettings() {
   Sslider.position(width / 2 - 140, height / 2 - 200 + 70);
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
 
-  CellColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
-  CellColorPicker.position(width / 2, height / 2 - 20);
-  CellColorPicker.center('horizontal');
+  //CellColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
+  CellColorPicker = createColorPicker(color(94, 217, 158));
+  CellColorPicker.position(width / 2 - 100, height / 2 - 20);
+  //CellColorPicker.center('horizontal');
   CellColorPicker.style('background-color', color('black'));
   CellColorPicker.style('border', 0);
 
-  BackgroundColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
-  BackgroundColorPicker.position(width / 2, height / 2 + 40);
-  BackgroundColorPicker.center('horizontal');
+  //BackgroundColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
+  BackgroundColorPicker = createColorPicker(color(0,0,0));
+  BackgroundColorPicker.position(width / 2 + 50, height / 2 - 20);
+  //BackgroundColorPicker.center('horizontal');
   BackgroundColorPicker.style('background-color', color('black'));
   BackgroundColorPicker.style('border', 0);
 }
@@ -131,10 +133,10 @@ function openSettings() {
     text('speed',width / 2 + 60, Rslider.y + 44);
     text('density',width / 2 + 60, Rslider.y + 74);
     textAlign(CENTER);
-    text('cell color', width / 2, height / 2 - 30);
-    text('background color', width / 2, height / 2 + 30);
+    text('cell', width / 2 - 75, height / 2 - 30);
+    text('background', width / 2 + 75, height / 2 - 30);
     text('field parameters', width / 2, height / 2 - 175);
-    text('game rule', width / 2, height / 2 + 90);
+    text('game rule', width / 2, height / 2 + 65);
 }
 
 function ChangeRule() {
@@ -156,8 +158,7 @@ function ChangeRule() {
       survive = [2, 3];
     }
   // interesting rules: 
-  // B34/S234   B2/S012345678   B234/S23
-  
+  // B34/S234 (1)   B(1!!)2/S012345678   B234/S23   B36/S23 (1) 
 }
 
 function keyPressed() {
@@ -172,6 +173,34 @@ function keyPressed() {
     if (keyCode === 27) {
       Settings();
     }
+    if (keyCode === 49) {
+      AddCrab();
+    }
+    if (keyCode === 50) {
+      AddShip();
+    }
+    if (keyCode === 51) {
+      AddGliderGun();
+    }
+    if (keyCode === 52) {
+      AddSpaceShip();
+    }
+    if (keyCode === 53) {
+      AddGalaxy();
+    }
+    if (keyCode === 69) {
+      EraseField();
+    }
+    // if (keyCode === 77) {
+    //   if (nowPlaying.isPlaying()) {
+    //     nowPlaying.pause();
+    //   } else {
+    //     nowPlaying.play();
+    //   }
+    // }
+    // if (keyCode === RIGHT_ARROW) {
+    //   next();
+    // }
 }
 
 function ChangeResolution() {

@@ -26,7 +26,7 @@ function Initialization() {
     
 }
 
-function makeGrid(cols, rows) {
+function makeGrid() {
     let arr = new Array(cols);
     for (let i = 0; i < cols; i++) {
       arr[i] = new Array(rows)
@@ -59,6 +59,8 @@ function countNeighbors(x, y) {
 }
 
 function drawCell(i, j) {
+    // let x = (i + cols) % cols * resolution;
+    // let y = (j + rows) % rows * resolution;
     let x = i * resolution;
     let y = j * resolution;
     color_ = CellColorPicker.color();
@@ -95,8 +97,6 @@ function removeCell(i, j) {
 function drawGrid(grid) {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        let x = i * resolution;
-        let y = j * resolution;
         if (grid[i][j] == 1) {
           drawCell(i, j);
         }
@@ -146,7 +146,7 @@ function nextGeneration() {
 
 function GameLife() {
 
-  AddRemoveOnMouseClick(grid, resolution);
+  AddRemoveOnMouseClick();
 
   if (setIsOpen == 1) {
       background(BackgroundColorPicker.color());
@@ -166,7 +166,7 @@ function GameLife() {
   }
 }
 
-function AddRemoveOnMouseClick(grid, resolution) {
+function AddRemoveOnMouseClick() {
     if (mouseIsPressed === true && clickAvailable) {
       if (mouseButton === LEFT) {
         var x = floor(mouseX / resolution);
@@ -187,6 +187,8 @@ function AddRemoveOnMouseClick(grid, resolution) {
       }
     }
 }
+
+
 
 function ValidateMousePosition(x, y) {
     return x >= 0 && y >= 0 && x < cols && y < rows;
