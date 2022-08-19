@@ -162,45 +162,61 @@ function ChangeRule() {
 }
 
 function keyPressed() {
+  if (keyCode === 13 && startMenuFlag) {
+    grid = makeGrid();
+    startMenuFlag = false;
+    mode = 1;
+    PinkFloyd.play();
+  } else if (!startMenuFlag) {
     if (key === ' ') {
       ChangeMode();
-    }
+  }
     // fullscreen on F.
-    if (keyCode === 70) {
-      let fs = fullscreen();
-      fullscreen(!fs);
+  if (keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  }
+  if (keyCode === 27) {
+    Settings();
+  }
+  if (keyCode === 49) {
+    AddCrab();
+    randomMode = 0;
+  }
+  if (keyCode === 50) {
+    AddShip();
+    randomMode = 0;
+  }
+  if (keyCode === 51) {
+    AddGliderGun();
+    randomMode = 0;
+  }
+  if (keyCode === 52) {
+    AddSpaceShip();
+    randomMode = 0;
+  }
+  if (keyCode === 53) {
+    AddGalaxy();
+    randomMode = 0;
+  }
+  if (keyCode === 69) {
+    EraseField();
+  }
+
+  if (keyCode === 77) {
+    if (PinkFloyd.isPlaying()) {
+      PinkFloyd.pause();
+    } else {
+      PinkFloyd.play();
     }
-    if (keyCode === 27) {
-      Settings();
-    }
-    if (keyCode === 49) {
-      AddCrab();
-    }
-    if (keyCode === 50) {
-      AddShip();
-    }
-    if (keyCode === 51) {
-      AddGliderGun();
-    }
-    if (keyCode === 52) {
-      AddSpaceShip();
-    }
-    if (keyCode === 53) {
-      AddGalaxy();
-    }
-    if (keyCode === 69) {
-      EraseField();
-    }
-    // if (keyCode === 77) {
-    //   if (nowPlaying.isPlaying()) {
-    //     nowPlaying.pause();
-    //   } else {
-    //     nowPlaying.play();
-    //   }
-    // }
-    // if (keyCode === RIGHT_ARROW) {
-    //   next();
-    // }
+  }
+}
+
+  // if (keyCode === RIGHT_ARROW) {
+  //   next();
+  // }
+  
+  
 }
 
 function ChangeResolution() {

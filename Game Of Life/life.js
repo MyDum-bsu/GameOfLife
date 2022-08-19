@@ -188,8 +188,6 @@ function AddRemoveOnMouseClick() {
     }
 }
 
-
-
 function ValidateMousePosition(x, y) {
     return x >= 0 && y >= 0 && x < cols && y < rows;
 }
