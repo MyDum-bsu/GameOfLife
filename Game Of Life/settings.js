@@ -166,7 +166,7 @@ function keyPressed() {
     grid = makeGrid();
     startMenuFlag = false;
     mode = 1;
-    PinkFloyd.play();
+    nowPlaying.play();
   } else if (!startMenuFlag) {
     if (key === ' ') {
       ChangeMode();
@@ -202,19 +202,21 @@ function keyPressed() {
   if (keyCode === 69) {
     EraseField();
   }
-
   if (keyCode === 77) {
-    if (PinkFloyd.isPlaying()) {
-      PinkFloyd.pause();
+    if (!nowPlaying.isPlaying()) {
+      nowPlaying.play();
     } else {
-      PinkFloyd.play();
+      nowPlaying.pause();
     }
+  }
+  if (keyCode === RIGHT_ARROW) {
+    nextSong();
+  }
+  if (keyCode === LEFT_ARROW) {
+    prevSong();
   }
 }
 
-  // if (keyCode === RIGHT_ARROW) {
-  //   next();
-  // }
   
   
 }
@@ -268,4 +270,28 @@ function ChangeMode() {
 
 function ChangeShape() {
   shape = ShapeSelect.value();
+}
+
+function nextSong() {
+  current++;
+
+  if (current > music_filelist.length - 1) {
+    current = 0;
+  }
+
+  nowPlaying.stop();
+  nowPlaying = musiclist[current];
+  nowPlaying.play();
+}
+
+function prevSong() {
+  current--;
+
+  if (current < 0) {
+    current = music_filelist.length - 1;
+  }
+
+  nowPlaying.stop();
+  nowPlaying = musiclist[current];
+  nowPlaying.play();
 }

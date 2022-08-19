@@ -1,20 +1,21 @@
 let canvas = null;
 let BJ_image;
 let life_image;
-let filelist = ['music/JudasPriest-Genocide.mp3'];
-let current = 0
-let playlist = [];
-let PinkFloyd;
-let JudasPriest;
+let music_filelist = ['music/Rainbow-CatchTheRainbow.mp3', 'music/PinkFloyd-HeyYou.mp3', 'music/JudasPriest-Genocide.mp3', 'music/Rainbow-RainbowEyes.mp3'];
+let current;
+let musiclist = [];
+let nowPlaying;
 let startMenuFlag = true;
 
+function preload() {
+  for (let filename of music_filelist) {
+    musiclist.push(loadSound(filename));
+  }
+}
+
 function setup() {
-  // for (let filename of filelist) {
-  //   playlist.push(loadSound(filename));
-  // }
-  // nowPlaying = playlist[current];
-  PinkFloyd = loadSound('music/PinkFloyd-HeyYou.mp3');
-  //JudasPriest = loadSound('music/JudasPriest-Genocide.mp3');
+  current = 0; // for music index
+  nowPlaying = musiclist[current];
   canvas = createCanvas(1920, 1076);
   canvas.parent('canvas');
    Initialization();
@@ -22,7 +23,6 @@ function setup() {
    CloseSettings();
 
   BJ_Initialization();
- //frameRate(60);
 }
 
 function draw() {
@@ -32,20 +32,7 @@ function draw() {
   } else {
     GameLife();
   }
-  // if (!nowPlaying.isPlaying()) {
-  //   next();
-  // }
 }
-
-// function next() {
-//   current++;
-//   if (current > playlist.length - 1) {
-//     current = 0;
-//   }
-//   nowPlaying = playlist[current];
-//   nowPlaying.play();
-// }
-
 function startMenu() {
   background(0,0,0);
   fill(80,80,80);
@@ -76,6 +63,3 @@ function startMenu() {
     
 }
 
-// function playPinkFloyd() {
-//   PinkFloyd.play();
-// }

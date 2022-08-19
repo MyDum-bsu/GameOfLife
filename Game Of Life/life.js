@@ -20,7 +20,7 @@ function Initialization() {
     MultiMode = 0;
     updated = 1;
     shape = 'rect';
-  
+    
     birth = [3];
     survive = [2, 3];
     
