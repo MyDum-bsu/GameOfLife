@@ -41,7 +41,7 @@ function CreateSettings() {
   ShapeSelect.option('circle');
   ShapeSelect.option('rect');
   ShapeSelect.position(width / 2 - 25, height / 2 + 20);
-  ShapeSelect.selected('rect');
+  ShapeSelect.selected('circle');
   ShapeSelect.center('horizontal');
   ShapeSelect.style('background-color', color('black'));
   ShapeSelect.style('border', 0);
@@ -65,14 +65,15 @@ function CreateSettings() {
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
 
   //CellColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
-  CellColorPicker = createColorPicker(color(94, 217, 158));
+  //CellColorPicker = createColorPicker(color(94, 217, 158));
+  CellColorPicker = createColorPicker(color(255, 255, 0));
   CellColorPicker.position(width / 2 - 100, height / 2 - 20);
   //CellColorPicker.center('horizontal');
   CellColorPicker.style('background-color', color('black'));
   CellColorPicker.style('border', 0);
 
   //BackgroundColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
-  BackgroundColorPicker = createColorPicker(color(0,0,0));
+  BackgroundColorPicker = createColorPicker(color(40,40,40));
   BackgroundColorPicker.position(width / 2 + 50, height / 2 - 20);
   //BackgroundColorPicker.center('horizontal');
   BackgroundColorPicker.style('background-color', color('black'));
@@ -180,23 +181,27 @@ function keyPressed() {
     Settings();
   }
   if (keyCode === 49) {
-    AddCrab();
+    AddGlider();
     randomMode = 0;
   }
   if (keyCode === 50) {
-    AddShip();
-    randomMode = 0;
-  }
-  if (keyCode === 51) {
     AddGliderGun();
     randomMode = 0;
   }
+  if (keyCode === 51) {
+    AddGalaxy();
+    randomMode = 0;
+  }
   if (keyCode === 52) {
-    AddSpaceShip();
+    AddShip();
     randomMode = 0;
   }
   if (keyCode === 53) {
-    AddGalaxy();
+    AddSpaceShip();
+    randomMode = 0;
+  }
+  if (keyCode === 54) {
+    AddCrab();
     randomMode = 0;
   }
   if (keyCode === 69) {

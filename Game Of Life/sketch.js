@@ -59,7 +59,12 @@ function startMenu() {
     text('press E to erase the playing field', width/2, 500);
     text('press M to pause / play music', width/2, 600);
     text('add a cell on the LMB , remove on the PCM', width/2, 700);
-    
-    
+
+  AddGlider(100, 780);
+  AddShip(400, 780);
+  AddSpaceShip(900, 780);
+  AddGliderGun(100, 880);
+  AddGalaxy(400, 880);
+  AddCrab(900, 880);
 }
 

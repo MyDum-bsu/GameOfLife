@@ -1,130 +1,26 @@
-function AddCrab() {
-
+function AddGlider(i = mouseX, j = mouseY) {
   if (clickAvailable) {
-    let x = floor(mouseX / resolution);
-    let y = floor(mouseY / resolution);
+    let x = floor(i / resolution);
+    let y = floor(j / resolution);
     if (ValidateMousePosition(x, y) == 1) {
-      grid[x][y] = 1;
-      drawCell(x, y);
-      grid[(x + cols)%cols][(y-3 + rows)%rows] = 1;
-      drawCell((x + cols)%cols, (y-3 + rows)%rows);
-      grid[(x+1 + cols)%cols][(y-3 + rows)%rows] = 1;
-      drawCell((x+1 + cols)%cols, (y-3 + rows)%rows);
-      grid[(x+2+ cols)%cols][(y-3 + rows)%rows] = 1;
-      drawCell((x+2 + cols)%cols, (y-3 + rows)%rows);
-
-      grid[(x+3+cols)%cols][(y-2+rows)%rows] = 1;
-      drawCell((x+3+cols)%cols, (y-2+rows)%rows);
-      grid[(x+3+cols)%cols][(y-1+rows)%rows] = 1;
-      drawCell((x+3+cols)%cols, (y-1 + rows)%rows);
-      grid[(x+3+cols)%cols][(y + rows)%rows] = 1;
-      drawCell((x+3+cols)%cols, (y+rows)%rows);
-
-      grid[(x-1+cols)%cols][(y-2+rows)%rows] = 1;
-      drawCell((x-1+cols)%cols, (y-2+rows)%rows);
-      grid[(x-2+cols)%cols][(y-1+rows)%rows] = 1;
-      drawCell((x-2+cols)%cols, (y-1+rows)%rows);
-      grid[(x+2+cols)%cols][(y+1+rows)%rows] = 1;
-      drawCell((x+2+cols)%cols, (y+1+rows)%rows);
-      grid[(x+1+cols)%cols][(y+2+rows)%rows] = 1;1
-      drawCell((x+1+cols)%cols, (y+2+rows)%rows);
-
-      grid[(x-3+cols)%cols][y] = 1;
-      drawCell((x-3+cols)%cols, y);
-      grid[(x-3+cols)%cols][(y+1+rows)%rows] = 1;
-      drawCell((x-3+cols)%cols, (y+1+rows)%rows);
-      grid[(x-3+cols)%cols][(y+2+rows)%rows] = 1;
-      drawCell((x-3+cols)%cols, (y+2+rows)%rows);
-
-      grid[(x-2+cols)%cols][(y+3+rows)%rows] = 1;
-      drawCell((x-2+cols)%cols,(y+3+rows)%rows);
-      grid[(x-1+cols)%cols][(y+3+rows)%rows] = 1;
-      drawCell(x-1, y+3);
-      grid[x][(y+3+rows)%rows] = 1;
-      drawCell(x, (y+3+rows)%rows);
-      
+      grid[(x + cols)%cols][(y - 1 + rows)%rows] = 1;
+      drawCell((x + cols)%cols, (y - 1 + rows)%rows);
+      grid[(x + 1 + cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x + 1 + cols)%cols, (y + rows)%rows);
+      grid[(x + 1 + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x + 1 + cols)%cols, (y + 1 + rows)%rows);
+      grid[(x + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x + cols)%cols, (y + 1 + rows)%rows);
+      grid[(x - 1 + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x - 1 + cols)%cols, (y + 1 + rows)%rows);
     }
   }
 } // 1
 
-function AddShip() {
+function AddGliderGun(i = mouseX, j = mouseY) {
   if (clickAvailable) {
-    let x = floor(mouseX / resolution);
-    let y = floor(mouseY / resolution);
-    if (ValidateMousePosition(x, y) == 1) {
-      grid[(x -6  + cols)%cols][(y + rows)%rows] = 1;
-      drawCell((x -6 + cols)%cols, (y + rows)%rows);
-      grid[(x -5  + cols)%cols][(y + rows)%rows] = 1;
-      drawCell((x -5 + cols)%cols, (y + rows)%rows);
-      grid[(x -6  + cols)%cols][(y - 1 +rows)%rows] = 1;
-      drawCell((x -6 + cols)%cols, (y - 1 + rows)%rows);
-      grid[(x - 5  + cols)%cols][(y -1 + rows)%rows] = 1;
-      drawCell((x - 5 + cols)%cols, (y - 1 + rows)%rows);
-
-      grid[(x - 3  + cols)%cols][(y + rows)%rows] = 1;
-      drawCell((x - 3 + cols)%cols, (y + rows)%rows);
-      grid[(x - 3  + cols)%cols][(y + 1 + rows)%rows] = 1;
-      drawCell((x - 3 + cols)%cols, (y + 1 + rows)%rows);
-      grid[(x - 3  + cols)%cols][(y -1 + rows)%rows] = 1;
-      drawCell((x - 3 + cols)%cols, (y - 1 + rows)%rows);
-      grid[(x - 3  + cols)%cols][(y -2 + rows)%rows] = 1;
-      drawCell((x - 3 + cols)%cols, (y -2 + rows)%rows);
-
-      grid[(x - 2  + cols)%cols][(y - 2 + rows)%rows] = 1;
-      drawCell((x - 2 + cols)%cols, (y - 2 + rows)%rows);
-      grid[(x - 2  + cols)%cols][(y - 3 + rows)%rows] = 1;
-      drawCell((x - 2 + cols)%cols, (y - 3 + rows)%rows);
-      grid[(x - 2  + cols)%cols][(y + 1 + rows)%rows] = 1;
-      drawCell((x - 2 + cols)%cols, (y + 1 + rows)%rows);
-      grid[(x - 2  + cols)%cols][(y + 2 + rows)%rows] = 1;
-      drawCell((x - 2 + cols)%cols, (y + 2 + rows)%rows);
-
-      grid[(x - 1  + cols)%cols][(y - 4 + rows)%rows] = 1;
-      drawCell((x - 1 + cols)%cols, (y - 4 + rows)%rows);
-      grid[(x - 1  + cols)%cols][(y + 3 +rows)%rows] = 1;
-      drawCell((x - 1 + cols)%cols, (y + 3 + rows)%rows);
-
-      grid[(x + 1  + cols)%cols][(y -4 + rows)%rows] = 1;
-      drawCell((x + 1 + cols)%cols, (y -4 + rows)%rows);
-      grid[(x + 1  + cols)%cols][(y + 3 + rows)%rows] = 1;
-      drawCell((x + 1 + cols)%cols, (y + 3 + rows)%rows);
-
-      grid[(x + 2  + cols)%cols][(y -2 + rows)%rows] = 1;
-      drawCell((x + 2 + cols)%cols, (y - 2 + rows)%rows);
-      grid[(x + 2  + cols)%cols][(y - 4 + rows)%rows] = 1;
-      drawCell((x + 2 + cols)%cols, (y - 4 + rows)%rows);
-      grid[(x + 2  + cols)%cols][(y + 1 + rows)%rows] = 1;
-      drawCell((x + 2 + cols)%cols, (y + 1 + rows)%rows);
-      grid[(x + 2  + cols)%cols][(y + 3 + rows)%rows] = 1;
-      drawCell((x + 2 + cols)%cols, (y + 3 + rows)%rows);
-
-      grid[(x + 3  + cols)%cols][(y + rows)%rows] = 1;
-      drawCell((x + 3 + cols)%cols, (y + rows)%rows);
-      grid[(x + 3  + cols)%cols][(y - 1 + rows)%rows] = 1;
-      drawCell((x + 3 + cols)%cols, (y - 1 + rows)%rows);
-
-      grid[(x + 4  + cols)%cols][(y + rows)%rows] = 1;
-      drawCell((x + 4 + cols)%cols, (y + rows)%rows);
-      grid[(x + 4  + cols)%cols][(y - 1 + rows)%rows] = 1;
-      drawCell((x + 4 + cols)%cols, (y - 1 + rows)%rows);
-
-      grid[(x + 5  + cols)%cols][(y + 1 + rows)%rows] = 1;
-      drawCell((x + 5 + cols)%cols, (y + 1 + rows)%rows);
-      grid[(x + 5  + cols)%cols][(y + 2 + rows)%rows] = 1;
-      drawCell((x + 5 + cols)%cols, (y + 2 + rows)%rows);
-      grid[(x + 5  + cols)%cols][(y - 2 + rows)%rows] = 1;
-      drawCell((x + 5 + cols)%cols, (y - 2 + rows)%rows);
-      grid[(x + 5  + cols)%cols][(y - 3 + rows)%rows] = 1;
-      drawCell((x + 5 + cols)%cols, (y - 3 + rows)%rows);
-
-    }
-  }
-} // 2
-
-function AddGliderGun() {
-  if (clickAvailable) {
-    let x = floor(mouseX / resolution);
-    let y = floor(mouseY / resolution);
+    let x = floor(i / resolution);
+    let y = floor(j / resolution);
     if (ValidateMousePosition(x, y) == 1) {
       grid[(x + cols)%cols][(y + rows)%rows] = 1;
       drawCell((x + cols)%cols, (y + rows)%rows);
@@ -218,12 +114,119 @@ function AddGliderGun() {
 
     }
   }
-} // 3
+} // 2
 
-function AddSpaceShip() {
+function AddGalaxy(i = mouseX, j = mouseY) {
   if (clickAvailable) {
-      let x = floor(mouseX / resolution);
-      let y = floor(mouseY / resolution);
+    let x = floor(i / resolution);
+    let y = floor(j / resolution);
+    if (ValidateMousePosition(x, y) == 1) {
+      for (let i = -4; i <= 1; i++) {
+        grid[(x + i + cols)%cols][(y - 3 + rows)%rows] = 1;
+        drawCell((x + i +cols)%cols,(y - 3 + rows)%rows);
+        grid[(x + i + cols)%cols][(y - 4 + rows)%rows] = 1;
+        drawCell((x + i + cols)%cols,(y - 4 + rows)%rows);
+      }
+      for (let i = -4; i <= 1; i++) {
+        grid[(x + 3 + cols)%cols][(y + i + rows)%rows] = 1;
+        drawCell((x + 3 +cols)%cols,(y + i + rows)%rows);
+        grid[(x + 4 + cols)%cols][(y + i + rows)%rows] = 1;
+        drawCell((x + 4 + cols)%cols,(y + i + rows)%rows);
+      }
+      for (let i = -1; i <= 4; i++) {
+        grid[(x + i + cols)%cols][(y + 3 + rows)%rows] = 1;
+        drawCell((x + i +cols)%cols,(y + 3 + rows)%rows);
+        grid[(x + i + cols)%cols][(y + 4 + rows)%rows] = 1;
+        drawCell((x + i + cols)%cols,(y + 4 + rows)%rows);
+      }
+      for (let i = -1; i <= 4; i++) {
+        grid[(x - 3 + cols)%cols][(y + i + rows)%rows] = 1;
+        drawCell((x - 3 +cols)%cols,(y + i + rows)%rows);
+        grid[(x - 4 + cols)%cols][(y + i + rows)%rows] = 1;
+        drawCell((x - 4 + cols)%cols,(y + i + rows)%rows);
+      }
+    }
+  }
+  } // 3
+
+function AddShip(i = mouseX, j = mouseY) {
+  if (clickAvailable) {
+    let x = floor(i / resolution);
+    let y = floor(j / resolution);
+    if (ValidateMousePosition(x, y) == 1) {
+      grid[(x -6  + cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x -6 + cols)%cols, (y + rows)%rows);
+      grid[(x -5  + cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x -5 + cols)%cols, (y + rows)%rows);
+      grid[(x -6  + cols)%cols][(y - 1 +rows)%rows] = 1;
+      drawCell((x -6 + cols)%cols, (y - 1 + rows)%rows);
+      grid[(x - 5  + cols)%cols][(y -1 + rows)%rows] = 1;
+      drawCell((x - 5 + cols)%cols, (y - 1 + rows)%rows);
+
+      grid[(x - 3  + cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x - 3 + cols)%cols, (y + rows)%rows);
+      grid[(x - 3  + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x - 3 + cols)%cols, (y + 1 + rows)%rows);
+      grid[(x - 3  + cols)%cols][(y -1 + rows)%rows] = 1;
+      drawCell((x - 3 + cols)%cols, (y - 1 + rows)%rows);
+      grid[(x - 3  + cols)%cols][(y -2 + rows)%rows] = 1;
+      drawCell((x - 3 + cols)%cols, (y -2 + rows)%rows);
+
+      grid[(x - 2  + cols)%cols][(y - 2 + rows)%rows] = 1;
+      drawCell((x - 2 + cols)%cols, (y - 2 + rows)%rows);
+      grid[(x - 2  + cols)%cols][(y - 3 + rows)%rows] = 1;
+      drawCell((x - 2 + cols)%cols, (y - 3 + rows)%rows);
+      grid[(x - 2  + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x - 2 + cols)%cols, (y + 1 + rows)%rows);
+      grid[(x - 2  + cols)%cols][(y + 2 + rows)%rows] = 1;
+      drawCell((x - 2 + cols)%cols, (y + 2 + rows)%rows);
+
+      grid[(x - 1  + cols)%cols][(y - 4 + rows)%rows] = 1;
+      drawCell((x - 1 + cols)%cols, (y - 4 + rows)%rows);
+      grid[(x - 1  + cols)%cols][(y + 3 +rows)%rows] = 1;
+      drawCell((x - 1 + cols)%cols, (y + 3 + rows)%rows);
+
+      grid[(x + 1  + cols)%cols][(y -4 + rows)%rows] = 1;
+      drawCell((x + 1 + cols)%cols, (y -4 + rows)%rows);
+      grid[(x + 1  + cols)%cols][(y + 3 + rows)%rows] = 1;
+      drawCell((x + 1 + cols)%cols, (y + 3 + rows)%rows);
+
+      grid[(x + 2  + cols)%cols][(y -2 + rows)%rows] = 1;
+      drawCell((x + 2 + cols)%cols, (y - 2 + rows)%rows);
+      grid[(x + 2  + cols)%cols][(y - 4 + rows)%rows] = 1;
+      drawCell((x + 2 + cols)%cols, (y - 4 + rows)%rows);
+      grid[(x + 2  + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x + 2 + cols)%cols, (y + 1 + rows)%rows);
+      grid[(x + 2  + cols)%cols][(y + 3 + rows)%rows] = 1;
+      drawCell((x + 2 + cols)%cols, (y + 3 + rows)%rows);
+
+      grid[(x + 3  + cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x + 3 + cols)%cols, (y + rows)%rows);
+      grid[(x + 3  + cols)%cols][(y - 1 + rows)%rows] = 1;
+      drawCell((x + 3 + cols)%cols, (y - 1 + rows)%rows);
+
+      grid[(x + 4  + cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x + 4 + cols)%cols, (y + rows)%rows);
+      grid[(x + 4  + cols)%cols][(y - 1 + rows)%rows] = 1;
+      drawCell((x + 4 + cols)%cols, (y - 1 + rows)%rows);
+
+      grid[(x + 5  + cols)%cols][(y + 1 + rows)%rows] = 1;
+      drawCell((x + 5 + cols)%cols, (y + 1 + rows)%rows);
+      grid[(x + 5  + cols)%cols][(y + 2 + rows)%rows] = 1;
+      drawCell((x + 5 + cols)%cols, (y + 2 + rows)%rows);
+      grid[(x + 5  + cols)%cols][(y - 2 + rows)%rows] = 1;
+      drawCell((x + 5 + cols)%cols, (y - 2 + rows)%rows);
+      grid[(x + 5  + cols)%cols][(y - 3 + rows)%rows] = 1;
+      drawCell((x + 5 + cols)%cols, (y - 3 + rows)%rows);
+
+    }
+  }
+} // 4
+
+function AddSpaceShip(i = mouseX, j = mouseY) {
+  if (clickAvailable) {
+      let x = floor(i / resolution);
+      let y = floor(j / resolution);
       if (ValidateMousePosition(x, y) == 1) {
           grid[(x - 35 + cols)%cols][(y + 8 + rows)%rows] = 1;
           drawCell((x - 35 + cols)%cols, (y + 8 + rows)%rows);
@@ -879,40 +882,56 @@ function AddSpaceShip() {
 
       }
   }
-} // 4
+} // 5
 
-function AddGalaxy() {
-if (clickAvailable) {
-  let x = floor(mouseX / resolution);
-  let y = floor(mouseY / resolution);
-  if (ValidateMousePosition(x, y) == 1) {
-    for (let i = -4; i <= 1; i++) {
-      grid[(x + i + cols)%cols][(y - 3 + rows)%rows] = 1;
-      drawCell((x + i +cols)%cols,(y - 3 + rows)%rows);
-      grid[(x + i + cols)%cols][(y - 4 + rows)%rows] = 1;
-      drawCell((x + i + cols)%cols,(y - 4 + rows)%rows);
-    }
-    for (let i = -4; i <= 1; i++) {
-      grid[(x + 3 + cols)%cols][(y + i + rows)%rows] = 1;
-      drawCell((x + 3 +cols)%cols,(y + i + rows)%rows);
-      grid[(x + 4 + cols)%cols][(y + i + rows)%rows] = 1;
-      drawCell((x + 4 + cols)%cols,(y + i + rows)%rows);
-    }
-    for (let i = -1; i <= 4; i++) {
-      grid[(x + i + cols)%cols][(y + 3 + rows)%rows] = 1;
-      drawCell((x + i +cols)%cols,(y + 3 + rows)%rows);
-      grid[(x + i + cols)%cols][(y + 4 + rows)%rows] = 1;
-      drawCell((x + i + cols)%cols,(y + 4 + rows)%rows);
-    }
-    for (let i = -1; i <= 4; i++) {
-      grid[(x - 3 + cols)%cols][(y + i + rows)%rows] = 1;
-      drawCell((x - 3 +cols)%cols,(y + i + rows)%rows);
-      grid[(x - 4 + cols)%cols][(y + i + rows)%rows] = 1;
-      drawCell((x - 4 + cols)%cols,(y + i + rows)%rows);
+function AddCrab(i = mouseX, j = mouseY) {
+
+  if (clickAvailable) {
+    let x = floor(i / resolution);
+    let y = floor(j / resolution);
+    if (ValidateMousePosition(x, y) == 1) {
+      grid[x][y] = 1;
+      drawCell(x, y);
+      grid[(x + cols)%cols][(y-3 + rows)%rows] = 1;
+      drawCell((x + cols)%cols, (y-3 + rows)%rows);
+      grid[(x+1 + cols)%cols][(y-3 + rows)%rows] = 1;
+      drawCell((x+1 + cols)%cols, (y-3 + rows)%rows);
+      grid[(x+2+ cols)%cols][(y-3 + rows)%rows] = 1;
+      drawCell((x+2 + cols)%cols, (y-3 + rows)%rows);
+
+      grid[(x+3+cols)%cols][(y-2+rows)%rows] = 1;
+      drawCell((x+3+cols)%cols, (y-2+rows)%rows);
+      grid[(x+3+cols)%cols][(y-1+rows)%rows] = 1;
+      drawCell((x+3+cols)%cols, (y-1 + rows)%rows);
+      grid[(x+3+cols)%cols][(y + rows)%rows] = 1;
+      drawCell((x+3+cols)%cols, (y+rows)%rows);
+
+      grid[(x-1+cols)%cols][(y-2+rows)%rows] = 1;
+      drawCell((x-1+cols)%cols, (y-2+rows)%rows);
+      grid[(x-2+cols)%cols][(y-1+rows)%rows] = 1;
+      drawCell((x-2+cols)%cols, (y-1+rows)%rows);
+      grid[(x+2+cols)%cols][(y+1+rows)%rows] = 1;
+      drawCell((x+2+cols)%cols, (y+1+rows)%rows);
+      grid[(x+1+cols)%cols][(y+2+rows)%rows] = 1;1
+      drawCell((x+1+cols)%cols, (y+2+rows)%rows);
+
+      grid[(x-3+cols)%cols][y] = 1;
+      drawCell((x-3+cols)%cols, y);
+      grid[(x-3+cols)%cols][(y+1+rows)%rows] = 1;
+      drawCell((x-3+cols)%cols, (y+1+rows)%rows);
+      grid[(x-3+cols)%cols][(y+2+rows)%rows] = 1;
+      drawCell((x-3+cols)%cols, (y+2+rows)%rows);
+
+      grid[(x-2+cols)%cols][(y+3+rows)%rows] = 1;
+      drawCell((x-2+cols)%cols,(y+3+rows)%rows);
+      grid[(x-1+cols)%cols][(y+3+rows)%rows] = 1;
+      drawCell(x-1, y+3);
+      grid[x][(y+3+rows)%rows] = 1;
+      drawCell(x, (y+3+rows)%rows);
+      
     }
   }
-}
-} // 5
+} // 6
 
 function EraseField() {
   grid = makeGrid();
