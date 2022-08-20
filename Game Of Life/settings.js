@@ -232,6 +232,7 @@ function keyPressed() {
     if (keyCode === 69) {
       EraseField();
     }
+  }
     if (keyCode === 77) {
       paused = paused == 1 ? 0 : 1;
       if (paused) {
@@ -240,7 +241,6 @@ function keyPressed() {
         nowPlaying.play();
       }
     }
-  }
   if (keyCode === RIGHT_ARROW) {
     nextSong();
   }

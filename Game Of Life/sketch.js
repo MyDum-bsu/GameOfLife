@@ -1,13 +1,13 @@
 let canvas = null;
 let BJ_image;
 let life_image;
-let music_filelist = ['music/JudasPriest-Genocide.mp3', 'music/Rainbow-CatchTheRainbow.mp3', 'music/DeepPurple-A200.mp3', 'music/DeepPurple-CoronariasRedig.mp3', 'music/PinkFloyd-HeyYou.mp3', 'music/Rainbow-RainbowEyes.mp3'];
+let music_filelist = ['music/DeepPurple-A200.mp3', 'music/JudasPriest-Genocide.mp3', 'music/Rainbow-CatchTheRainbow.mp3', 'music/DeepPurple-CoronariasRedig.mp3', 'music/PinkFloyd-HeyYou.mp3', 'music/Rainbow-RainbowEyes.mp3'];
 let current;
 let musiclist = [];
 let nowPlaying;
 let startMenuFlag = true;
 let flag = true;
-let paused = 0;
+let paused = 1;
 
 function preload() {
   for (let filename of music_filelist) {
@@ -18,6 +18,7 @@ function preload() {
 function setup() {
   current = 0; // for music index
   nowPlaying = musiclist[current];
+  nowPlaying.setVolume(0.20);
   canvas = createCanvas(1920, 1076);
   canvas.parent('canvas');
    Initialization();
@@ -42,7 +43,6 @@ function draw() {
 function startMenu() {
   background(0,0,0);
   drawGrid(grid);
-  nowPlaying.setVolume(0.20);
   if (flag) {
     addAnimationForMenu(width/2, height/2);
     flag = false;
@@ -73,5 +73,6 @@ function startMenu() {
     text('press E to erase the playing field', width/2, 500);
     text('press M to pause / play music', width/2, 600);
     text('add a cell on the LMB , remove on the RMB', width/2, 700); 
+    text('use 1   2   3   4   5   6   7   8   9   for patterns', width/2, 800); 
 }
 
