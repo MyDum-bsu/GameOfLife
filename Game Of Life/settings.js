@@ -221,6 +221,14 @@ function keyPressed() {
       addAnimationForMenu();
       randomMode = 0;
     }
+    if (keyCode === 56) {
+      AddSpacefiller();
+      randomMode = 0;
+    }
+    if (keyCode === 57) {
+      AddHalfmax();
+      randomMode = 0;
+    }
     if (keyCode === 69) {
       EraseField();
     }
@@ -232,16 +240,14 @@ function keyPressed() {
         nowPlaying.play();
       }
     }
-    if (keyCode === RIGHT_ARROW) {
-      nextSong();
-    }
-    if (keyCode === LEFT_ARROW) {
-      prevSong();
-    }
-}
+  }
+  if (keyCode === RIGHT_ARROW) {
+    nextSong();
+  }
+  if (keyCode === LEFT_ARROW) {
+    prevSong();
+  }
 
-  
-  
 }
 
 function ChangeResolution() {
