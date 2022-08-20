@@ -17,9 +17,9 @@ function Initialization() {
     mode = 0;
     setIsOpen = 0;
     randomMode = 1;
-    MultiMode = 0;
+    MultiMode = 1;
     updated = 1;
-    shape = 'circle';
+    shape = 'rect';
     
     birth = [3];
     survive = [2, 3];

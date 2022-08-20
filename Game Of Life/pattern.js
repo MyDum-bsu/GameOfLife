@@ -933,6 +933,113 @@ function AddCrab(i = mouseX, j = mouseY) {
   }
 } // 6
 
+function addAnimationForMenu(i = mouseX, j = mouseY) {
+  let x = floor(i/resolution);
+  let y = floor(j/resolution);
+  if (ValidateMousePosition(x, y) == 1) {
+    grid[x][y] = 1;
+    drawCell(x, y);
+
+    grid[(x-2 + cols)%cols][y] = 1;
+    drawCell((x-2+cols )%cols, y);
+    grid[(x-4+cols)%cols][y] = 1;
+    drawCell((x-4+cols)%cols, y);
+
+    grid[(x+2+cols)%cols][y] = 1;
+    drawCell((x+2+cols)%cols, y);
+    grid[(x+4+cols)%cols][y] = 1;
+    drawCell((x+4+cols)%cols, y);
+
+    grid[(x+2+cols)%cols][(y+1+rows)%rows] = 1;
+    drawCell((x+2+cols)%cols, (y+1+rows)%rows);
+    grid[(x+2+cols)%cols][(y+3+rows)%rows] = 1;
+    drawCell((x+2+cols)%cols, (y+3+rows)%rows);
+    grid[(x+3+cols)%cols][(y+1+rows)%rows] = 1;
+    drawCell((x+3+cols)%cols, (y+1+rows)%rows);
+    grid[(x+3+cols)%cols][(y+2+rows)%rows] = 1;
+    drawCell((x+3+cols)%cols, (y+2+rows)%rows);
+
+    grid[(x+6+cols)%cols][(y+1+rows)%rows] = 1;
+    drawCell((x+6+cols)%cols, (y+1+rows)%rows);
+    grid[(x+6+cols)%cols][(y+2+rows)%rows] = 1;
+    drawCell((x+6+cols)%cols, (y+2+rows)%rows);
+    grid[(x+6+cols)%cols][(y+3+rows)%rows] = 1;
+    drawCell((x+6+cols)%cols, (y+3+rows)%rows);
+
+    grid[(x+5+cols)%cols][(y+3+rows)%rows] = 1;
+    drawCell((x+5+cols)%cols, (y+3+rows)%rows);
+
+    grid[(x+cols)%cols][(y+2+rows)%rows] = 1;
+    drawCell((x+cols)%cols, (y+2+rows)%rows);
+    grid[(x+cols)%cols][(y+4+rows)%rows] = 1;
+    drawCell((x+cols)%cols, (y+4+rows)%rows);
+
+    grid[(x-1+cols)%cols][(y+2+rows)%rows] = 1;
+    drawCell((x-1+cols)%cols, (y+2+rows)%rows);
+    grid[(x-1+cols)%cols][(y+3+rows)%rows] = 1;
+    drawCell((x-1+cols)%cols, (y+3+rows)%rows);
+    grid[(x-1+cols)%cols][(y+6+rows)%rows] = 1;
+    drawCell((x-1+cols)%cols, (y+6+rows)%rows);
+    grid[(x-2+cols)%cols][(y+6+rows)%rows] = 1;
+    drawCell((x-2+cols)%cols, (y+6+rows)%rows);
+    grid[(x-3+cols)%cols][(y+6+rows)%rows] = 1;
+    drawCell((x-3+cols)%cols, (y+6+rows)%rows);
+
+    grid[(x-3+cols)%cols][(y+5+rows)%rows] = 1;
+    drawCell((x-3+cols)%cols, (y+5+rows)%rows);
+    grid[(x-3+cols)%cols][(y+2+rows)%rows] = 1;
+    drawCell((x-3+cols)%cols, (y+2+rows)%rows);
+
+    grid[(x-2+cols)%cols][(y+3+rows)%rows] = 1;
+    drawCell((x-2+cols)%cols, (y+3+rows)%rows);
+
+    grid[(x-6+cols)%cols][(y-1+rows)%rows] = 1;
+    drawCell((x-6+cols)%cols, (y-1+rows)%rows);
+    grid[(x-6+cols)%cols][(y-2+rows)%rows] = 1;
+    drawCell((x-6+cols)%cols, (y-2+rows)%rows);
+    grid[(x-6+cols)%cols][(y-3+rows)%rows] = 1;
+    drawCell((x-6+cols)%cols, (y-3+rows)%rows);
+
+    grid[(x-5+cols)%cols][(y-3+rows)%rows] = 1;
+    drawCell((x-5+cols)%cols, (y-3+rows)%rows);
+
+    grid[(x-2+cols)%cols][(y-1+rows)%rows] = 1;
+    drawCell((x-2+cols)%cols, (y-1+rows)%rows);
+    grid[(x-3+cols)%cols][(y-1+rows)%rows] = 1;
+    drawCell((x-3+cols)%cols, (y-1+rows)%rows);
+    grid[(x-3+cols)%cols][(y-2+rows)%rows] = 1;
+    drawCell((x-3+cols)%cols, (y-2+rows)%rows);
+    grid[(x-2+cols)%cols][(y-3+rows)%rows] = 1;
+    drawCell((x-2+cols)%cols, (y-3+rows)%rows);
+
+    grid[(x+cols)%cols][(y-2+rows)%rows] = 1;
+    drawCell((x+cols)%cols, (y-2+rows)%rows);
+    grid[(x+cols)%cols][(y-4+rows)%rows] = 1;
+    drawCell((x+cols)%cols, (y-4+rows)%rows);
+
+    grid[(x+1+cols)%cols][(y-2+rows)%rows] = 1;
+    drawCell((x+1+cols)%cols, (y-2+rows)%rows);
+    grid[(x+1+cols)%cols][(y-2+rows)%rows] = 1;
+    drawCell((x+1+cols)%cols, (y-2+rows)%rows);
+    grid[(x+1+cols)%cols][(y-3+rows)%rows] = 1;
+    drawCell((x+1+cols)%cols, (y-3+rows)%rows);
+    grid[(x+1+cols)%cols][(y-6+rows)%rows] = 1;
+    drawCell((x+1+cols)%cols, (y-6+rows)%rows);
+
+    grid[(x+2+cols)%cols][(y-3+rows)%rows] = 1;
+    drawCell((x+2+cols)%cols, (y-3+rows)%rows);
+    grid[(x+2+cols)%cols][(y-6+rows)%rows] = 1;
+    drawCell((x+2+cols)%cols, (y-6+rows)%rows);
+
+    grid[(x+3+cols)%cols][(y-2+rows)%rows] = 1;
+    drawCell((x+3+cols)%cols, (y-2+rows)%rows);
+    grid[(x+3+cols)%cols][(y-5+rows)%rows] = 1;
+    drawCell((x+3+cols)%cols, (y-5+rows)%rows);
+    grid[(x+3+cols)%cols][(y-6+rows)%rows] = 1;
+    drawCell((x+3+cols)%cols, (y-6+rows)%rows);
+  }
+} // 7
+
 function EraseField() {
   grid = makeGrid();
   //ChangeMode();

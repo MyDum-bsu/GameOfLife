@@ -1,11 +1,13 @@
 let canvas = null;
 let BJ_image;
 let life_image;
-let music_filelist = ['music/Rainbow-CatchTheRainbow.mp3', 'music/PinkFloyd-HeyYou.mp3', 'music/JudasPriest-Genocide.mp3', 'music/Rainbow-RainbowEyes.mp3'];
+let music_filelist = ['music/JudasPriest-Genocide.mp3', 'music/DeepPurple-A200.mp3', 'music/DeepPurple-CoronariasRedig.mp3', 'music/PinkFloyd-HeyYou.mp3', 'music/Rainbow-CatchTheRainbow.mp3', 'music/Rainbow-RainbowEyes.mp3'];
 let current;
 let musiclist = [];
 let nowPlaying;
 let startMenuFlag = true;
+let flag = true;
+let paused = 0;
 
 function preload() {
   for (let filename of music_filelist) {
@@ -21,20 +23,34 @@ function setup() {
    Initialization();
    CreateSettings();
    CloseSettings();
-
-  BJ_Initialization();
+  //BJ_Initialization();
 }
 
 function draw() {
   //BJReaction();
+  if (!nowPlaying.isPlaying() && !paused) {
+     nextSong();
+  }
   if (startMenuFlag) {
     startMenu();
   } else {
     GameLife();
   }
 }
+
+
 function startMenu() {
   background(0,0,0);
+  drawGrid(grid);
+  nowPlaying.setVolume(0.20);
+  if (flag) {
+    addAnimationForMenu(width/2, height/2);
+    flag = false;
+    
+  }
+  grid = nextGeneration(grid);
+      
+
   fill(80,80,80);
   //fill(40,40,40);
   rect(width / 2 - 160, 170, 105, 40, 5, 5);
@@ -45,8 +61,6 @@ function startMenu() {
   rect(width / 2 - 50, 670, 67, 40, 5, 5);
   rect(width / 2 + 309, 670, 67, 40, 5, 5);
 
-  //let abc = rect(width / 2 - 160, 770, 105, 40, 5, 5);
-  //abc.mousePressed(playPinkFloyd);
   fill(255, 255, 255);
     textSize(50);
     textFont('Courier');
@@ -58,13 +72,6 @@ function startMenu() {
     text('press SPACE to pause the game', width/2, 400);
     text('press E to erase the playing field', width/2, 500);
     text('press M to pause / play music', width/2, 600);
-    text('add a cell on the LMB , remove on the PCM', width/2, 700);
-
-  AddGlider(100, 780);
-  AddShip(400, 780);
-  AddSpaceShip(900, 780);
-  AddGliderGun(100, 880);
-  AddGalaxy(400, 880);
-  AddCrab(900, 880);
+    text('add a cell on the LMB , remove on the RMB', width/2, 700); 
 }
 
