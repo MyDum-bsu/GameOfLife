@@ -20,7 +20,6 @@ function Initialization() {
     MultiMode = 1;
     updated = 1;
     shape = 'rect';
-    
     birth = [3];
     survive = [2, 3];
     
@@ -37,7 +36,7 @@ function makeGrid() {
     return arr;
 }
 
-function fillGrid(grid, cols, rows) {
+function fillGrid() {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         grid[i][j] = floor(random(density)) == 0;
@@ -94,7 +93,7 @@ function removeCell(i, j) {
     rect(x, y, resolution, resolution);
 }
   
-function drawGrid(grid) {
+function drawGrid() {
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         if (grid[i][j] == 1) {
@@ -135,7 +134,7 @@ function cellEvolve(next, i, j) {
 }
 
 function nextGeneration() {
-    let next = makeGrid(cols, rows);  
+    let next = makeGrid();  
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         cellEvolve(next, i, j);
@@ -150,7 +149,7 @@ function GameLife() {
 
   if (setIsOpen == 1) {
       background(BackgroundColorPicker.color());
-      drawGrid(grid);
+      drawGrid();
       fill(0, 0, 0);
       rect(width / 2 - 150, height / 2 - 200, 300, 400, 50, 50);
       openSettings();
@@ -158,11 +157,11 @@ function GameLife() {
   if (mode == 1) {      
     background(BackgroundColorPicker.color());
     if (randomMode == 1 && updated) {
-      fillGrid(grid, cols, rows);
+      fillGrid();
       updated = 0;
     }
-    grid = nextGeneration(grid);
-    drawGrid(grid);    
+    grid = nextGeneration();
+    drawGrid();
   }
 }
 

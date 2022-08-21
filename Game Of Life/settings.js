@@ -53,10 +53,10 @@ function CreateSettings() {
 
 
   Rslider = createSlider(2, 200, 5, 1);
-  Sslider = createSlider(1, 240, 60, 1);
+  Sslider = createSlider(1, 240, 30, 1);
   Dslider = createSlider(1, 200, 9, 1);
 
-  Vslider = createSlider(0,1,0.20,0.01);
+  Vslider = createSlider(0,1,0.2,0.01);
 
   resolution = Rslider.value();
   frameRate(Sslider.value());
@@ -71,15 +71,11 @@ function CreateSettings() {
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
   Vslider.position(width / 2 - 140, height / 2 -70);
 
-  //CellColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
-  //CellColorPicker = createColorPicker(color(94, 217, 158));
   CellColorPicker = createColorPicker(color(255, 255, 0));
   CellColorPicker.position(width / 2 - 100, height / 2 - 20);
-  //CellColorPicker.center('horizontal');
   CellColorPicker.style('background-color', color('black'));
   CellColorPicker.style('border', 0);
 
-  //BackgroundColorPicker = createColorPicker(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
   BackgroundColorPicker = createColorPicker(color(40,40,40));
   BackgroundColorPicker.position(width / 2 + 50, height / 2 - 20);
   //BackgroundColorPicker.center('horizontal');
@@ -174,13 +170,14 @@ function ChangeRule() {
 }
 
 function keyPressed() {
+    // ENTER
   if (keyCode === 13 && startMenuFlag) {
     grid = makeGrid();
     startMenuFlag = false;
     mode = 1;
     MultiMode = 0;
-    //nextSong();
     birth = [3];
+    // Space
   } else if (!startMenuFlag) {
     if (key === ' ') {
       ChangeMode();
@@ -189,50 +186,55 @@ function keyPressed() {
     if (keyCode === 70) {
       let fs = fullscreen();
       fullscreen(!fs);
-    }
+    } // ESC
     if (keyCode === 27) {
       Settings();
-    }
+    } // 1
     if (keyCode === 49) {
       AddGlider();
       randomMode = 0;
-    }
+    } // 2
     if (keyCode === 50) {
       AddGliderGun();
       randomMode = 0;
-    }
+    } // 3
     if (keyCode === 51) {
       AddGalaxy();
       randomMode = 0;
-    }
+    } // 4
     if (keyCode === 52) {
       AddShip();
       randomMode = 0;
-    }
+    } // 5
     if (keyCode === 53) {
       AddSpaceShip();
       randomMode = 0;
-    }
+    } // 6
     if (keyCode === 54) {
       AddCrab();
       randomMode = 0;
-    }
+    } // 7
     if (keyCode === 55) {
-      addAnimationForMenu();
+      AddAnimationForMenu();
       randomMode = 0;
-    }
+    } // 8
     if (keyCode === 56) {
       AddSpacefiller();
       randomMode = 0;
-    }
+    } // 9
     if (keyCode === 57) {
       AddHalfmax();
       randomMode = 0;
-    }
+    } // E
     if (keyCode === 69) {
       EraseField();
-    }
-  }
+    } //  ->
+    if (keyCode === RIGHT_ARROW) {
+      nextSong();
+    } // -<
+    if (keyCode === LEFT_ARROW) {
+      prevSong();
+    } // M
     if (keyCode === 77) {
       paused = paused == 1 ? 0 : 1;
       if (paused) {
@@ -241,14 +243,18 @@ function keyPressed() {
         nowPlaying.play();
       }
     }
-  if (keyCode === RIGHT_ARROW) {
-    nextSong();
   }
-  if (keyCode === LEFT_ARROW) {
-    prevSong();
+  if (keyCode === UP_ARROW) {
+    Vslider.value(Vslider.value() + 0.01);
+    nowPlaying.setVolume(Vslider.value() + 0.01);
   }
-
+  if (keyCode === DOWN_ARROW) {
+    Vslider.value(Vslider.value() - 0.01);
+    nowPlaying.setVolume(Vslider.value() - 0.01);
+  }
 }
+  
+
 
 function ChangeResolution() {
     if (resolution != Rslider.value()) {
@@ -257,13 +263,12 @@ function ChangeResolution() {
       cols = floor(width / resolution);
       rows = floor(height / resolution);
       grid = makeGrid(cols, rows);
+      randomMode = 1;
     }
 }
   
 function ChangeSpeed() {
-    if (frameRate() != Sslider.value()) {
       frameRate(Sslider.value());
-    }
 }
 
 function ChangeDensity() {
@@ -315,6 +320,7 @@ function nextSong() {
   nowPlaying.stop();
   nowPlaying = musiclist[current];
   nowPlaying.play();
+  nowPlaying.setVolume(Vslider.value());
 }
 
 function prevSong() {
@@ -327,4 +333,54 @@ function prevSong() {
   nowPlaying.stop();
   nowPlaying = musiclist[current];
   nowPlaying.play();
+}
+
+function startMenu() {
+  background(0,0,0);
+  drawGrid(grid);
+  //frameRate(30);
+  if (flag) {
+    AddAnimationForMenu(width/2, height/2);
+    flag = false;
+    //nowPlaying.play();
+  }
+  
+  grid = nextGeneration();
+  if (!nowPlaying.isPlaying()) {
+    nextSong();
+  }
+
+  fill(80,80,80);
+  //fill(40,40,40);
+  rect(width / 2 - 160, 170, 105, 40, 5, 5);
+  rect(width / 2 - 170, 270, 70, 40, 5, 5);
+  rect(width / 2 - 160, 370, 105, 40, 5, 5);
+  rect(width / 2 - 207, 470, 37, 40, 5, 5);
+  rect(width / 2 - 162, 570, 37, 40, 5, 5);
+  rect(width / 2 - 50, 670, 67, 40, 5, 5);
+  rect(width / 2 + 309, 670, 67, 40, 5, 5);
+
+  rect(width / 2 + 189, 770, 37, 40, 5, 5);
+  rect(width / 2 + 117, 770, 37, 40, 5, 5);
+  rect(width / 2 + 45, 770, 37, 40, 5, 5);
+  rect(width / 2 - 27, 770, 37, 40, 5, 5);
+  rect(width / 2 - 99, 770, 37, 40, 5, 5);
+  rect(width / 2 - 171, 770, 37, 40, 5, 5);
+  rect(width / 2 - 243, 770, 37, 40, 5, 5);
+  rect(width / 2 - 315, 770, 37, 40, 5, 5);
+  rect(width / 2 - 387, 770, 37, 40, 5, 5);
+
+  fill(255, 255, 255);
+    textSize(70);
+    textFont('Courier');
+    textAlign(CENTER);
+    text("Conway's Game of Life", width/2, 100);
+    textSize(30);
+    text('press ENTER to start the game', width/2, 200);
+    text('press ESC to open the settings', width/2, 300);
+    text('press SPACE to pause the game', width/2, 400);
+    text('press E to erase the playing field', width/2, 500);
+    text('press M to pause / play music', width/2, 600);
+    text('add a cell on the LMB , remove on the RMB', width/2, 700); 
+    text('use   1   2   3   4   5   6   7   8   9   for patterns', width/2, 800); 
 }

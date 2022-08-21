@@ -933,7 +933,7 @@ function AddCrab(i = mouseX, j = mouseY) {
   }
 } // 6
 
-function addAnimationForMenu(i = mouseX, j = mouseY) {
+function AddAnimationForMenu(i = mouseX, j = mouseY) {
   let x = floor(i/resolution);
   let y = floor(j/resolution);
   if (ValidateMousePosition(x, y) == 1) {
@@ -2508,7 +2508,6 @@ function AddHalfmax(i = mouseX, j = mouseY) {
     drawCell((x -  22 + cols )%cols, (y + 13 + rows)%rows);
     grid[(x -  21  + cols)%cols][(y + 13 + rows)%rows] = 1;
     drawCell((x - 21 + cols )%cols, (y + 13 + rows)%rows);
-
 } 
 } // 9
 function EraseField() {
