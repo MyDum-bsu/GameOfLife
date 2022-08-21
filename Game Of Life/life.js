@@ -144,7 +144,7 @@ function nextGeneration() {
 }
 
 function GameLife() {
-
+  cursor(CROSS);
   AddRemoveOnMouseClick();
 
   if (setIsOpen == 1) {

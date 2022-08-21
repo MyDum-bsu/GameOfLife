@@ -52,7 +52,7 @@ function CreateSettings() {
   ShapeSelect.changed(ChangeShape);
 
 
-  Rslider = createSlider(2, 200, 5, 1);
+  Rslider = createSlider(2, 200, 3, 1);
   Sslider = createSlider(1, 240, 30, 1);
   Dslider = createSlider(1, 200, 9, 1);
 
@@ -71,12 +71,12 @@ function CreateSettings() {
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
   Vslider.position(width / 2 - 140, height / 2 -70);
 
-  CellColorPicker = createColorPicker(color(255, 255, 0));
+  CellColorPicker = createColorPicker(color(0, 89, 175));
   CellColorPicker.position(width / 2 - 100, height / 2 - 20);
   CellColorPicker.style('background-color', color('black'));
   CellColorPicker.style('border', 0);
 
-  BackgroundColorPicker = createColorPicker(color(40,40,40));
+  BackgroundColorPicker = createColorPicker(color(0,0,0));
   BackgroundColorPicker.position(width / 2 + 50, height / 2 - 20);
   //BackgroundColorPicker.center('horizontal');
   BackgroundColorPicker.style('background-color', color('black'));
@@ -225,7 +225,12 @@ function keyPressed() {
     if (keyCode === 57) {
       AddHalfmax();
       randomMode = 0;
-    } // E
+    }
+    if (keyCode === 48) {
+      AddSierpinskiTriangle(width/2, height/2);
+      randomMode = 0;
+    }
+    // E
     if (keyCode === 69) {
       EraseField();
     } //  ->
@@ -336,11 +341,13 @@ function prevSong() {
 }
 
 function startMenu() {
+  noCursor();
   background(0,0,0);
   drawGrid(grid);
   //frameRate(30);
   if (flag) {
     AddAnimationForMenu(width/2, height/2);
+    //AddSierpinskiTriangle(width/2, height/2);
     flag = false;
     //nowPlaying.play();
   }

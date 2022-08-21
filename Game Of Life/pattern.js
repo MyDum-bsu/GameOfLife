@@ -2510,6 +2510,21 @@ function AddHalfmax(i = mouseX, j = mouseY) {
     drawCell((x - 21 + cols )%cols, (y + 13 + rows)%rows);
 } 
 } // 9
+
+function AddSierpinskiTriangle(i = mouseX, j = mouseY) {
+  if (clickAvailable) {
+    let x = floor(i / resolution);
+    let y = floor(j / resolution);
+    if (ValidateMousePosition(x, y) == 1) {
+        for (let k = -255; k <= 256; k++) {
+          grid[(x + k + cols)%cols][(y + rows)%rows] = 1;
+          drawCell((x + k +  cols )%cols, (y + rows)%rows);
+         // grid[(x + cols)%cols][(y + k + rows)%rows] = 1;
+          //drawCell((x +  cols )%cols, (y + k + rows)%rows);
+        }
+    }
+  }
+}
 function EraseField() {
   grid = makeGrid();
   //ChangeMode();

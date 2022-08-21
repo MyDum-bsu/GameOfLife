@@ -29,8 +29,9 @@ function setup() {
     if (startMenuFlag) {
       EraseField();
       AddAnimationForMenu(width/2, height/2);
+      //Add(width/2, height/2);
     }    
-  }, 84000);
+  }, 142000); // 84000
   
 }
 
