@@ -1,7 +1,7 @@
 let canvas = null;
 let BJ_image;
 let life_image;
-let music_filelist = ['music/DeepPurple-A200.mp3', 'music/Pink-WelcomeToTheMachine.mp3', 'music/DeepPurple-SailAway.mp3', 'music/PinkFloyd-ShineOnYouCrazyDiamond.mp3',
+let music_filelist = ['music/DeepPurple-A200.mp3', 'music/DeepPurple-SailAway.mp3', 'music/Pink-WelcomeToTheMachine.mp3', 'music/PinkFloyd-ShineOnYouCrazyDiamond.mp3',
  'music/Rainbow-CatchTheRainbow.mp3', 'music/PinkFloyd-HeyYou.mp3', 'music/DeepPurple-YouKeepOnMoving.mp3', 'music/DeepPurple-CoronariasRedig.mp3', 'music/Rainbow-RainbowEyes.mp3', 'music/JudasPriest-Genocide.mp3'];
 let current;
 let musiclist = [];

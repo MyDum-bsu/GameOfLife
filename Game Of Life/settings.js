@@ -14,6 +14,10 @@ let ShapeSelect;
 let resolution;
 let density;
 
+
+let opac = 0;
+let start = false;
+
 function CreateSettings() {
   inputBirthSurvive = createInput('B3/S23');
   inputBirthSurvive.position(width / 2, height / 2 +75);
@@ -172,11 +176,8 @@ function ChangeRule() {
 function keyPressed() {
     // ENTER
   if (keyCode === 13 && startMenuFlag) {
-    grid = makeGrid();
-    startMenuFlag = false;
-    mode = 1;
-    MultiMode = 0;
-    birth = [3];
+    start = true;
+   
     // Space
   } else if (!startMenuFlag) {
     if (key === ' ') {
@@ -345,6 +346,9 @@ function startMenu() {
   background(0,0,0);
   drawGrid(grid);
   //frameRate(30);
+  if (opac <= 256 && !start) {
+    opac+=2;
+  }
   if (flag) {
     AddAnimationForMenu(width/2, height/2);
     //AddSierpinskiTriangle(width/2, height/2);
@@ -353,11 +357,11 @@ function startMenu() {
   }
   
   grid = nextGeneration();
-  if (!nowPlaying.isPlaying()) {
-    nextSong();
-  }
+  //if (!nowPlaying.isPlaying()) {
+  //  nextSong();
+  //}
 
-  fill(80,80,80);
+  fill(80,80,80, opac);
   //fill(40,40,40);
   rect(width / 2 - 160, 170, 105, 40, 5, 5);
   rect(width / 2 - 170, 270, 70, 40, 5, 5);
@@ -376,8 +380,9 @@ function startMenu() {
   rect(width / 2 - 243, 770, 37, 40, 5, 5);
   rect(width / 2 - 315, 770, 37, 40, 5, 5);
   rect(width / 2 - 387, 770, 37, 40, 5, 5);
+  rect(width / 2 - 459, 770, 37, 40, 5, 5);
 
-  fill(255, 255, 255);
+  fill(255, 255, 255, opac);
     textSize(70);
     textFont('Courier');
     textAlign(CENTER);
@@ -389,5 +394,15 @@ function startMenu() {
     text('press E to erase the playing field', width/2, 500);
     text('press M to pause / play music', width/2, 600);
     text('add a cell on the LMB , remove on the RMB', width/2, 700); 
-    text('use   1   2   3   4   5   6   7   8   9   for patterns', width/2, 800); 
+    text('use   1   2   3   4   5   6   7   8   9   0   for patterns', width/2, 800); 
+
+    if (start) {
+      opac -= 1;
+      if (opac == 0) {
+        startMenuFlag = false;
+        grid = makeGrid();
+        mode = 1;
+        MultiMode = 0;
+      }
+    }
 }
