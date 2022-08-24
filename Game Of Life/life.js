@@ -63,6 +63,7 @@ function drawCell(i, j) {
     let x = i * resolution;
     let y = j * resolution;
     color_ = CellColorPicker.color();
+
     fill(color_);
     if (MultiMode) {
       if (countNeighbors(i, j) == Math.max.apply(null, birth)) {
@@ -144,7 +145,7 @@ function nextGeneration() {
 }
 
 function GameLife() {
-  cursor(CROSS);
+  cursor(ARROW);
   AddRemoveOnMouseClick();
 
   if (setIsOpen == 1) {

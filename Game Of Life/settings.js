@@ -75,7 +75,7 @@ function CreateSettings() {
   Dslider.position(width / 2 - 140, height / 2 - 200 + 100);
   Vslider.position(width / 2 - 140, height / 2 -70);
 
-  CellColorPicker = createColorPicker(color(0, 89, 175));
+  CellColorPicker = createColorPicker(color(0, 124, 237));
   CellColorPicker.position(width / 2 - 100, height / 2 - 20);
   CellColorPicker.style('background-color', color('black'));
   CellColorPicker.style('border', 0);
@@ -228,8 +228,11 @@ function keyPressed() {
       randomMode = 0;
     }
     if (keyCode === 48) {
-      AddSierpinskiTriangle(width/2, height/2);
+      AddSierpinskiTriangle(width/2, height/2); // 0
       randomMode = 0;
+    }
+    if (keyCode === 79) {
+      AddAnotherBeauty(width/2, height/2);
     }
     // E
     if (keyCode === 69) {
@@ -347,7 +350,7 @@ function startMenu() {
   drawGrid(grid);
   //frameRate(30);
   if (opac <= 256 && !start) {
-    opac+=2;
+    opac+=1;
   }
   if (flag) {
     AddAnimationForMenu(width/2, height/2);
@@ -371,22 +374,23 @@ function startMenu() {
   rect(width / 2 - 50, 670, 67, 40, 5, 5);
   rect(width / 2 + 309, 670, 67, 40, 5, 5);
 
-  rect(width / 2 + 189, 770, 37, 40, 5, 5);
-  rect(width / 2 + 117, 770, 37, 40, 5, 5);
-  rect(width / 2 + 45, 770, 37, 40, 5, 5);
-  rect(width / 2 - 27, 770, 37, 40, 5, 5);
-  rect(width / 2 - 99, 770, 37, 40, 5, 5);
-  rect(width / 2 - 171, 770, 37, 40, 5, 5);
-  rect(width / 2 - 243, 770, 37, 40, 5, 5);
-  rect(width / 2 - 315, 770, 37, 40, 5, 5);
-  rect(width / 2 - 387, 770, 37, 40, 5, 5);
-  rect(width / 2 - 459, 770, 37, 40, 5, 5);
+  rect(width / 2 + 189 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 + 117 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 + 45 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 - 27 + 37, 770, 37, 40, 5, 5);
+  rect(width / 2 - 99 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 - 171 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 - 243 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 - 315 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 - 387 + 36, 770, 37, 40, 5, 5);
+  rect(width / 2 - 459 + 36, 770, 37, 40, 5, 5);
 
-  fill(255, 255, 255, opac);
+  fill(255, 255, 255, 3*opac);
     textSize(70);
     textFont('Courier');
     textAlign(CENTER);
     text("Conway's Game of Life", width/2, 100);
+    fill(255, 255, 255, opac);
     textSize(30);
     text('press ENTER to start the game', width/2, 200);
     text('press ESC to open the settings', width/2, 300);
@@ -397,8 +401,8 @@ function startMenu() {
     text('use   1   2   3   4   5   6   7   8   9   0   for patterns', width/2, 800); 
 
     if (start) {
-      opac -= 1;
-      if (opac == 0) {
+      opac -= 2;
+      if (opac <= 0) {
         startMenuFlag = false;
         grid = makeGrid();
         mode = 1;

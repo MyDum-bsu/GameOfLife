@@ -40,6 +40,7 @@ function draw() {
 
   if (!nowPlaying.isPlaying() && !paused) {
      nextSong();
+     //nowPlaying.setVolume(0.2);
   }
 
   if (startMenuFlag) {
